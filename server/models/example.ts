@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+export const mongoose = require('mongoose');
 
 const ExampleSchema = new mongoose.Schema({
     name: String,
@@ -7,4 +7,4 @@ const ExampleSchema = new mongoose.Schema({
 
 const Example = mongoose.model('example', ExampleSchema);
 
-module.exports = Example
+module.exports = Example;
