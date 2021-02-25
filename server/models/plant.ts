@@ -2,25 +2,77 @@ import {mongoose} from './example';
 //import {Species} from './species';
 //import {Comment} from './comment';
 //import {Toxicity} from './toxicity';
+const url = 'https://res.cloudinary.com/ded5al291/image/upload/v1614255324/My%20Plants/logo-plant-leaf_bsnbcb.png'
 
 const PlantSchema = new mongoose.Schema({
-    name: String,
-    latinName: String,
-    minTemperature: Number,
-    maxTemperature: Number,
-    watering: String,
-    wateringMethod: String,
-    subsoil: String,
-    conditioners: String,
-    spraying: String,
-    sunlight: String,
-    humidity: String,
-    application: String,
-    image: String,
-    accepted: Boolean,
-    //species: Species,
-    //comments: Comment,
-    //toxicity: Toxicity
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    latinName: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    minTemperature: {
+        type: Number,
+        required: true
+    },
+    maxTemperature: {
+        type: Number,
+        required: true
+    },
+    watering: {
+        type: String,
+        required: true
+    },
+    wateringMethod: {
+        type: String,
+        required: true
+    },
+    subsoil: {
+        type: String,
+        required: true
+    },
+    conditioners: {
+        type: String,
+        required: true
+    },
+    spraying: {
+        type: String,
+        required: true
+    },
+    sunlight: {
+        type: String,
+        required: true
+    },
+    humidity: {
+        type: String,
+        required: true
+    },
+    application: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        default: url,
+        required: true
+    },
+    accepted: {
+        type: Boolean,
+        required: true
+    },
+    /*species: {
+        type: Species,
+        required: true
+    }, 
+    toxicity: {
+        type: Toxicity,
+        required: true
+    }
+    comments: Comment*/
 })
 
 const Plant = mongoose.model('plant', PlantSchema);
