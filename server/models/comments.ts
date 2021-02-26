@@ -1,8 +1,8 @@
-import {mongoose} from './example';
+const mongoose = require('mongoose');
 
 const url = 'http://putyoururlhere.com';
 
-const CommentsSchema = new mongoose.Schema({
+const CommentSchema = new mongoose.Schema({
     user_id: {
         type: Number,
         required: true,
@@ -18,11 +18,10 @@ const CommentsSchema = new mongoose.Schema({
     },
     image_path: {
         type: String,
-        default: url,
-        required: true
+        default: url
     }
 })
 
-const Comments = mongoose.model('comments', CommentsSchema);
+const CommentEl = mongoose.model('comment', CommentSchema);
 
-module.exports = Comments
+module.exports = CommentEl
