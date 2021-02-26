@@ -4,7 +4,7 @@ const url = 'http://putyoururlhere.com';
 
 const CommentsSchema = new mongoose.Schema({
     user_id: {
-        type: String,
+        type: Number,
         required: true,
         unique: true
     },

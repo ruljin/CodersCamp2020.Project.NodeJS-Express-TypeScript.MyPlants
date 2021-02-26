@@ -2,11 +2,11 @@ import {mongoose} from './example';
 
 const ToxicitySchema = new mongoose.Schema({
     human: {
-        type: String,
+        type: Boolean,
         required: true
     },
     animal: {
-        type: String,
+        type: Boolean,
         required: true
     }
 })
