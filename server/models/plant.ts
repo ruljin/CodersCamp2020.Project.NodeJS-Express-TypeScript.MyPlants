@@ -4,7 +4,7 @@ import {mongoose} from '../server';
 //import {Toxicity} from './toxicity';
 const url = 'https://res.cloudinary.com/ded5al291/image/upload/v1614255324/My%20Plants/logo-plant-leaf_bsnbcb.png'
 
-const PlantSchema = new mongoose.Schema({
+export const PlantSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -75,5 +75,5 @@ const PlantSchema = new mongoose.Schema({
     comments: Comment*/
 })
 
-export const Plant = mongoose.model('plant', PlantSchema);
+export default mongoose.model('plant', PlantSchema);
 
