@@ -7,4 +7,4 @@ const ExampleSchema = new mongoose.Schema({
 
 const Example = mongoose.model('example', ExampleSchema);
 
-module.exports = Example
+module.exports = Example;
