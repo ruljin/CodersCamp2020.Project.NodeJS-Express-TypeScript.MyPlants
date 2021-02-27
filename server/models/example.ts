@@ -1,4 +1,4 @@
-export const mongoose = require('mongoose');
+import { mongoose } from '../server';
 
 const ExampleSchema = new mongoose.Schema({
     name: String,
