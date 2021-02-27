@@ -1,23 +1,22 @@
-require('dotenv').config();
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import * as dotenv from 'dotenv';
 
-const express = require('express');
+dotenv.config();
 const app = express();
-const bodyParser = require('body-parser');
-const cors = require('cors');
-export const mongoose = require('mongoose');
-
 const PORT = process.env.PORT;
 
-require('./database.ts');
+import './database';
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-require('./router/router.ts');
+import './router/router';
 
 app.listen(PORT, () => {
-    console.log('Listening on port: ' + PORT);
+  console.log('Listening on port: ' + PORT);
 })
 
-module.exports = app;
+export { app };

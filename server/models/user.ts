@@ -1,7 +1,6 @@
-import { mongoose } from '../server';
-// import { PlantSchema } from './plant';
+import * as mongoose from 'mongoose';
 
-const NoteSchema = new mongoose.Schema({
+export const NoteSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true
@@ -12,19 +11,17 @@ const NoteSchema = new mongoose.Schema({
   },
   created_at: {
     type: Date,
-    default: Date.now,
-    required: true
+    default: Date.now
   },
   updated_at: {
     type: Date,
-    default: Date.now,
-    required: true
+    default: Date.now
   },
   image_path: {
     type: String,
     default: ''
   }
-})
+});
 
 export const UserSchema = new mongoose.Schema({
   login: {
@@ -53,8 +50,12 @@ export const UserSchema = new mongoose.Schema({
     type: Boolean,
     required: true
   },
-  // plants: [PlantSchema],
+  plants: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'plant'
+  },
   notes: [NoteSchema]
 });
 
-export default mongoose.model('user', UserSchema);
+export const user = mongoose.model('user', UserSchema);
+export const note = mongoose.model('note', NoteSchema);
