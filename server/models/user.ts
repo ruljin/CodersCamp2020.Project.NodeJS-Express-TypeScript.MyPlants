@@ -1,7 +1,30 @@
 import { mongoose } from '../server';
 // import { PlantSchema } from './plant';
 
-const NoteSchema = new mongoose.Schema({/* TODO */})
+const NoteSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  created_at: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
+  updated_at: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
+  image_path: {
+    type: String,
+    default: ''
+  }
+})
 
 export const UserSchema = new mongoose.Schema({
   login: {
