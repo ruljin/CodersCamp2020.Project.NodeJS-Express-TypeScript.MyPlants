@@ -1,4 +1,4 @@
-import {mongoose} from './example'; 
+import {mongoose} from '../server'; 
 //import {Species} from './species';
 //import {Comment} from './comment';
 //import {Toxicity} from './toxicity';
@@ -75,6 +75,5 @@ const PlantSchema = new mongoose.Schema({
     comments: Comment*/
 })
 
-const Plant = mongoose.model('plant', PlantSchema);
+export const Plant = mongoose.model('plant', PlantSchema);
 
-module.exports = Plant
