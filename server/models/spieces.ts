@@ -1,4 +1,4 @@
-import {mongoose} from './example'
+import {mongoose} from '../server'
 
 const SpeciesSchema = new mongoose.Schema({
     name: {
@@ -8,6 +8,5 @@ const SpeciesSchema = new mongoose.Schema({
     }
 })
 
-const Species = mongoose.model('specie', SpeciesSchema);
+export const Species = mongoose.model('species', SpeciesSchema);
 
-module.exports = Species
