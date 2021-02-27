@@ -1,6 +1,6 @@
 import {mongoose} from '../server'
 
-const SpeciesSchema = new mongoose.Schema({
+export const SpeciesSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -8,5 +8,5 @@ const SpeciesSchema = new mongoose.Schema({
     }
 })
 
-export const Species = mongoose.model('species', SpeciesSchema);
+export default mongoose.model('species', SpeciesSchema);
 
