@@ -1,5 +1,5 @@
 name: Super-Linter CI
-on: [push, pull_request]
+on: [push]
 jobs:
   build-lint-test:
     name: Build, lint and test
