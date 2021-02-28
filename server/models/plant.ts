@@ -3,7 +3,23 @@ import * as mongoose from 'mongoose';
 const defaultPlantUrl = 'https://res.cloudinary.com/ded5al291/image/upload/v1614255324/My%20Plants/logo-plant-leaf_bsnbcb.png';
 
 export const CommentSchema = new mongoose.Schema({
-  // TODO
+  user_id: {
+    type: Number,
+    required: true,
+    unique: true
+  },
+  timestamp: {
+    type: Date,
+    required: true
+  },
+  text: {
+    type: String,
+    required: true
+  },
+  image_path: {
+    type: String,
+    default: defaultPlantUrl
+  }
 });
 
 export const ToxicitySchema = new mongoose.Schema({
