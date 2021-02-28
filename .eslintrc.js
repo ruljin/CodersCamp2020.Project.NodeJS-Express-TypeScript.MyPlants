@@ -17,6 +17,16 @@ module.exports = {
   rules: {
     'linebreak-style': 'off',
     'import/no-extraneous-dependencies': 'off',
-    'comma-dangle': ['error', 'never']
+    'comma-dangle': ['error', 'never'],
+    'no-console': 'off',
+    'import/extensions': 'off'
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: ['server'],
+        extensions: ['.ts']
+      }
+    }
   }
 };

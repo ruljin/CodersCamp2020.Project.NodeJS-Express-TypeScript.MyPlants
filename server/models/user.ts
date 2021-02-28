@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
-export const NoteSchema = new mongoose.Schema({
+const NoteSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true
@@ -28,7 +28,7 @@ export const NoteSchema = new mongoose.Schema({
   }
 });
 
-export const UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   login: {
     type: String,
     required: true,
@@ -44,7 +44,7 @@ export const UserSchema = new mongoose.Schema({
     required: true
   },
   name: {
-    type: Number,
+    type: String,
     required: true
   },
   surname: {
@@ -62,5 +62,10 @@ export const UserSchema = new mongoose.Schema({
   notes: [NoteSchema]
 });
 
-export const user = mongoose.model('user', UserSchema);
-export const note = mongoose.model('note', NoteSchema);
+const User = mongoose.model('user', UserSchema);
+const Note = mongoose.model('note', NoteSchema);
+
+export default {
+  User,
+  Note
+};

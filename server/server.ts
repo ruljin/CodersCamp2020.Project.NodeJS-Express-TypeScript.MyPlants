@@ -3,7 +3,8 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as dotenv from 'dotenv';
 import './database.ts';
-import './router/router.ts';
+
+import userController from './controllers/userController';
 
 dotenv.config();
 const app = express();
@@ -16,5 +17,7 @@ app.use(cors());
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
+
+app.use('/api/user', userController);
 
 export default app;
