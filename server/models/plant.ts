@@ -23,7 +23,14 @@ export const CommentSchema = new mongoose.Schema({
 });
 
 export const ToxicitySchema = new mongoose.Schema({
-  // TODO
+  human: {
+    type: Boolean,
+    required: true
+  },
+  animal: {
+    type: Boolean,
+    required: true
+  }
 });
 
 export const PlantSchema = new mongoose.Schema({
