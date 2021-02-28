@@ -5,21 +5,26 @@ export const NoteSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  description: {
+  text: {
     type: String,
     required: true
   },
-  created_at: {
+  plant: {
+    type: mongoose.Schema.Types.ObjectID,
+    ref: 'plant',
+    required: true
+  },
+  timestamp: {
     type: Date,
     default: Date.now
   },
-  updated_at: {
-    type: Date,
-    default: Date.now
-  },
-  image_path: {
+  image: {
     type: String,
     default: ''
+  },
+  private: {
+    type: Boolean,
+    required: true
   }
 });
 
