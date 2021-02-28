@@ -10,7 +10,7 @@ export const NoteSchema = new mongoose.Schema({
     required: true
   },
   plant: {
-    type: mongoose.Schema.Types.ObjectID,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'plant',
     required: true
   },
