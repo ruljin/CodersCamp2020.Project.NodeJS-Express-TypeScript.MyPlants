@@ -1,13 +1,15 @@
 {
-    "compilerOptions": {
-      "sourceMap": true,
-      "target": "es2017",
-      "outDir": "./dist",
-      "baseUrl": "./src"
-    },
-    "include": [
-      "server/**/*.ts"],
-    "exclude": [
-      "node_modules"
-    ]
-  }
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "es2017",
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "moduleResolution": "node"
+  },
+  "include": [
+    "server/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
