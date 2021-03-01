@@ -3,14 +3,14 @@ import * as mongoose from 'mongoose';
 const defaultPlantUrl = 'https://res.cloudinary.com/ded5al291/image/upload/v1614255324/My%20Plants/logo-plant-leaf_bsnbcb.png';
 
 export const CommentSchema = new mongoose.Schema({
-  user_id: {
-    type: Number,
-    required: true,
-    unique: true
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required: true
   },
   timestamp: {
     type: Date,
-    required: true
+    default: Date.now
   },
   text: {
     type: String,
@@ -18,7 +18,7 @@ export const CommentSchema = new mongoose.Schema({
   },
   image_path: {
     type: String,
-    default: defaultPlantUrl
+    default: ''
   }
 });
 
