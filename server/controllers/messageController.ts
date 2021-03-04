@@ -6,7 +6,7 @@ const router = express.Router();
 // Add Message
 router.post('/messages', async (req, res) => {
   if (!req.params.text || !req.params.date) {
-    res.status(400).json({ msg: `No message with the id of ${req.params.id}` });
+    res.status(400).json({ msg: 'You have to specify text and date of message' });
   }
 
   const message = await Message.create(req.params.date ? {
@@ -18,7 +18,7 @@ router.post('/messages', async (req, res) => {
     user: req.params.user
   });
 
-  message.save();
+  await message.save();
   res.json(message);
 });
 
@@ -40,3 +40,5 @@ router.delete('/:id', async (req, res) => {
     res.status(400).json({ msg: `No message with the id of ${req.params.id}` });
   }
 });
+
+export default router;
