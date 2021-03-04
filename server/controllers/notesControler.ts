@@ -1,12 +1,13 @@
 import * as express from 'express';
-import Note  from '../models/user';
+import User  from '../models/user';
 import { Request, Response } from 'express';
+import user from '../models/user';
 
 const router = express.Router();
 
 //POST - dodawanie notatek
 router.post('/', async (req: Request, res: Response) => {
-    const newNote = await Note.Note.create(req.body);
+    const newNote = await User.Note.create(req.body);
     await newNote.save((err: Error) => {
         if (err) {
             return res
@@ -23,7 +24,7 @@ router.post('/', async (req: Request, res: Response) => {
 
 //PUT - edycja notatek
 router.put('./:id', async (req: Request, res: Response) => {
-    const editNote = await Note.Note.findByIdAndUpdate(req.params.id);
+    const editNote = await User.Note.findByIdAndUpdate(req.params.id);
     if (editNote) {
         return res
             .status(200)
@@ -35,9 +36,9 @@ router.put('./:id', async (req: Request, res: Response) => {
 //DELETE - usuwanie notatek
 router.delete('./:id', async (req: Request, res: Response) => {
     const id = { _id: req.params.id };
-    const deleteNote = await Note.Note.findById(req.params.id);
+    const deleteNote = await User.Note.findById(req.params.id);
     if (deleteNote) {
-        await Note.Note.findByIdAndRemove(id);
+        await User.Note.findByIdAndRemove(id);
         return res
             .status(200)
             .json({response: `{req.params.id} was deleted.`})
