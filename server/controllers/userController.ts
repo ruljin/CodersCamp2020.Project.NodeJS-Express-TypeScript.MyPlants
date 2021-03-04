@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   User.User.findOne({ $or: [{ email: req.body.email }, { login: req.body.login }] })
-    .then((user: mongoose.Document) => {
+    .then(async (user: mongoose.Document) => {
       if (user) {
         if (user.get('email') === req.body.email) {
           res.status(409).json({ error: 'Email exist!' });
@@ -21,19 +21,10 @@ router.post('/', (req, res) => {
           res.status(409).json({ error: 'Login exist!' });
         }
       } else {
-        bcrypt.hash(req.body.password, 12).then((hashedPassword: string) => {
-          const newUser = new User.User({
-            login: req.body.login,
-            email: req.body.email,
-            password: hashedPassword,
-            name: req.body.name,
-            surname: req.body.surname,
-            admin: req.body.admin
-          });
-
-          newUser.save();
-          return res.sendStatus(200).end();
-        });
+        req.body.password = await bcrypt.hash(req.body.password, 12);
+        const newUser = new User.User(req.body);
+        newUser.save();
+        res.sendStatus(200).end();
       }
     })
     .catch((err: Error) => console.error(err));
@@ -53,6 +44,7 @@ router.post('/login', (req, res) => {
           .then((doMatch: Boolean) => {
             if (doMatch) {
               res.status(200).end();
+              // TO DO
             } else {
               res.status(404).json({ error: 'Invalid password!' });
             }
@@ -78,6 +70,37 @@ router.delete('/:id', (req, res) => {
         .status(200)
         .json({ response: `User of id ${req.params.id} was deleted.` })
         .end();
+    })
+    .catch((err: Error) => console.error(err));
+});
+
+router.put('/:id', (req, res) => {
+  User.User.findById(req.params.id)
+    .then(async (result) => {
+      if (!result) {
+        return res.status(400).json({ error: `Cannot find user with the id of ${req.params.id}` });
+      }
+
+      if (req.body.password) {
+        req.body.password = await bcrypt.hash(req.body.password, 12);
+      }
+
+      if (req.body.email || req.body.login) {
+        await User.User.findOne({ $or: [{ email: req.body.email }, { login: req.body.login }] })
+          .then((user: mongoose.Document) => {
+            if (user) {
+              if (user.get('email') === req.body.email) {
+                res.status(409).json({ error: 'Email is taken!' });
+              } else {
+                res.status(409).json({ error: 'Login is taken!' });
+              }
+            }
+          })
+          .catch((error) => console.error(error));
+      }
+
+      await User.User.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
+      return res.status(200).end();
     })
     .catch((err: Error) => console.error(err));
 });
