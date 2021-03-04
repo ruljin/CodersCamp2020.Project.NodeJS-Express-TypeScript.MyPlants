@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.ts",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "custom-env": "^2.0.1",
     "dotenv": "^8.2.0",
