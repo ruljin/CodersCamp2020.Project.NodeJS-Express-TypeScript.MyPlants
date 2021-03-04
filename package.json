@@ -29,7 +29,8 @@
     "start": "cross-env NODE_ENV=development ts-node ./server/server.ts",
     "start:production": "cross-env NODE_ENV=production ts-node ./server/server.ts",
     "nodemon": "nodemon ./server/server.ts",
-    "lint": "eslint server --ext .ts"
+    "lint": "eslint server --ext .ts",
+    "test": "jest"
   },
   "repository": {
     "type": "git",

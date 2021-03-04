@@ -19,7 +19,9 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'comma-dangle': ['error', 'never'],
     'no-console': 'off',
-    'import/extensions': 'off'
+    'import/extensions': 'off',
+    'no-underscore-dangle': 'off',
+    'no-param-reassign': 'off'
   },
   settings: {
     'import/resolver': {
