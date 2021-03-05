@@ -3,8 +3,8 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as dotenv from 'dotenv';
 import './database.ts';
-
 import userController from './controllers/userController';
+import noteController from './controllers/noteController';
 
 dotenv.config();
 const app = express();
@@ -19,5 +19,6 @@ app.listen(PORT, () => {
 });
 
 app.use('/api/user', userController);
+app.use('/api/notes', noteController);
 
 export default app;
