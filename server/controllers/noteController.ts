@@ -35,7 +35,7 @@ router.delete('/notes/:id', async (req: Request, res: Response) => {
         if (err) {
             return res
             .status(404)
-            .json({error: 'Comment with given id doesn\'t exist.'})
+            .json({error: 'Note with given id doesn\'t exist.'})
             .end();
         }
         return res
