@@ -6,7 +6,7 @@ import user from '../models/user';
 const router = express.Router();
 
 //POST - dodawanie notatek
-router.post('/', async (req: Request, res: Response) => {
+router.post('/notes', async (req: Request, res: Response) => {
     const newNote = await User.Note.create(req.body);
     await newNote.save((err: Error) => {
         if (err) {
@@ -23,18 +23,18 @@ router.post('/', async (req: Request, res: Response) => {
 });
 
 //PUT - edycja notatek
-router.put('./:id', async (req: Request, res: Response) => {
-    const editNote = await User.Note.findByIdAndUpdate(req.params.id);
-    if (editNote) {
-        return res
-            .status(200)
-            .end();
-    }
-    return res.status(400).json({error: 'Comment not saved.'});
+router.put('./notes/:id', async (req: Request, res: Response) => {
+    const editNote = await User.Note.findByIdAndUpdate(req.params.id, (err, noteExist) => {
+        if (err) {
+            return res.status(404).end();
+        }
+        noteExist.
+    });
+    
 });
 
 //DELETE - usuwanie notatek
-router.delete('./:id', async (req: Request, res: Response) => {
+router.delete('./notes/:id', async (req: Request, res: Response) => {
     const id = { _id: req.params.id };
     const deleteNote = await User.Note.findById(req.params.id);
     if (deleteNote) {
@@ -51,7 +51,7 @@ router.delete('./:id', async (req: Request, res: Response) => {
 });
 
 //GET - pobieranie wszystkich notatek
-router.get('./', async (req: Request, res: Response) => {
+router.get('./notes', async (req: Request, res: Response) => {
 
 });
 
