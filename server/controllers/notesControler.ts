@@ -1,7 +1,8 @@
 import * as express from 'express';
-import User  from '../models/user';
+import User from '../models/user';
+import Note from '../models/user';
 import { Request, Response } from 'express';
-import user from '../models/user';
+
 
 const router = express.Router();
 
@@ -24,18 +25,20 @@ router.post('/notes', async (req: Request, res: Response) => {
 
 //PUT - edycja notatek
 router.put('./notes/:id', async (req: Request, res: Response) => {
-    const editNote = await User.Note.findByIdAndUpdate(req.params.id, (err, noteExist) => {
-        if (err) {
-            return res.status(404).end();
+    const editNote = await User.Note.findById(req.params.id);
+        if (!editNote) {
+            return res
+            .status(404)
+            .json({error: 'Note with the given id doesn\'t exist'});
         }
-        noteExist.
+        
     });
     
 });
 
 //DELETE - usuwanie notatek
 router.delete('./notes/:id', async (req: Request, res: Response) => {
-    const id = { _id: req.params.id };
+    const id =  req.params.id;
     const deleteNote = await User.Note.findById(req.params.id);
     if (deleteNote) {
         await User.Note.findByIdAndRemove(id);
@@ -52,7 +55,11 @@ router.delete('./notes/:id', async (req: Request, res: Response) => {
 
 //GET - pobieranie wszystkich notatek
 router.get('./notes', async (req: Request, res: Response) => {
-
+    const notes = await User.Note.find();
+    if (!notes) {
+        return res.status(404).json({error: 'Notes not found'}).end();
+    }
+    return res.status(200).json(notes).end();
 });
 
 //GET - pobieranie ze względu na prywatnośc
