@@ -1,7 +1,12 @@
 import * as express from 'express';
 import * as bcrypt from 'bcrypt';
+import * as dotenv from 'dotenv';
+import * as jwt from 'jsonwebtoken';
 import * as mongoose from 'mongoose';
 import User from '../models/user';
+
+dotenv.config();
+const { JWT_KEY } = process.env;
 
 const router = express.Router();
 
@@ -43,8 +48,12 @@ router.post('/login', (req, res) => {
           .compare(password, userPassword)
           .then((doMatch: Boolean) => {
             if (doMatch) {
-              res.status(200).end();
-              // TO DO
+              const token = jwt.sign(
+                { id: user.get('_id'), email: user.get('email'), admin: user.get('admin') },
+                JWT_KEY,
+                { expiresIn: '1h' }
+              );
+              res.status(200).json({ error: 'Auth succesful!', token });
             } else {
               res.status(404).json({ error: 'Invalid password!' });
             }
