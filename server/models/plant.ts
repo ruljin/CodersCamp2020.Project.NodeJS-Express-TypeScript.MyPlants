@@ -106,6 +106,6 @@ export const PlantSchema = new mongoose.Schema({
   }
 });
 
-export const comment = mongoose.model('comment', CommentSchema);
-export const toxicity = mongoose.model('toxicity', ToxicitySchema);
-export const plant = mongoose.model('plant', PlantSchema);
+export const Comment = mongoose.model('comment', CommentSchema);
+export const Toxicity = mongoose.model('toxicity', ToxicitySchema);
+export const Plant = mongoose.model('plant', PlantSchema);
