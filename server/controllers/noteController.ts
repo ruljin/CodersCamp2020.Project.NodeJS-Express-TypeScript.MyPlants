@@ -7,54 +7,59 @@ import { Request, Response } from 'express';
 const router = express.Router();
 
 //POST - dodawanie notatek
-router.post('/notes', async (req: Request, res: Response) => {
-    const newNote = new user.Note(req.body);
-    const id = req.params.id;
-    await user.Note.findById(id, (err: Error, noteObject: mongoose.Document) => {
-        if (err) {
-         return res
-         .status(404)
-         .json({ error: 'Note not found!' })
-         .end();
-        }
-        noteObject.get('notes').push(newNote);
-        noteObject.save();
-        return res.status(200).end();
-    });
+router.post('/', async (req: Request, res: Response) => {
+  const newNote = await user.Note.create(req.body);
+  newNote.save((err: Error) => {
+      if (err) {
+          return res
+          .status(404)
+          .json({error: 'Note not saved'})
+          .end();
+      }
+      return res.status(200).json(newNote).end();
+  })
 });
 
 //PUT - edycja notatek
-router.put('/notes/:id', async (req: Request, res: Response) => {
-       
+router.put('/:id', async (req: Request, res: Response) => {
+  user.Note.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true }, (err: Error) =>{
+      if (err) {
+          return res
+          .status(404)
+          .json({error: 'Note not saved.'})
+          .end();
+      }
+      return res.status(200).end();
+  })
 });
 
 //DELETE - usuwanie notatek
-router.delete('/notes/:id', async (req: Request, res: Response) => {
-    const id = req.params.id;
-    await user.Note.findByIdAndDelete(id, {}, (err) => {
-        if (err) {
-            return res
-            .status(404)
-            .json({error: 'Comment with given id doesn\'t exist.'})
-            .end();
+router.delete('/:id', async (req: Request, res: Response) => {
+  const id = req.params.id;
+  await user.Note.findByIdAndDelete(id, {}, (err) => {
+    if (err) {
+      return res
+        .status(404)
+        .json({error: 'Comment with given id doesn\'t exist.'})
+        .end();
         }
         return res
-            .status(200)
-            .json({ response: `Note deleted.`})
-            .en();
+          .status(200)
+          .json({ response: `Note deleted.`})
+          .end();
     });
 });
 
 //GET - pobieranie wszystkich notatek
-router.get('/notes', async (req: Request, res: Response) => {
-    const notes = await user.Note.find();
-    res.json(notes);
+router.get('/', async (req: Request, res: Response) => {
+  const notes = await user.Note.find();
+  res.json(notes);
 });
 
 //GET - pobieranie ze względu na prywatność
-router.get('/notes', async (req: Request, res: Response) => {
-    const notes = await user.Note.find({ private: true });
-    res.json(notes);
+router.get('/private', async (req: Request, res: Response) => {
+  const notes = await user.Note.find({ private: true });
+  res.json(notes);
 });
 
 export default router;
