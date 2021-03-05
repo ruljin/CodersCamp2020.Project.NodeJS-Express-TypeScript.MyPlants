@@ -25,7 +25,7 @@ router.post('/notes', async (req: Request, res: Response) => {
 
 //PUT - edycja notatek
 router.put('/notes/:id', async (req: Request, res: Response) => {
-    
+       
 });
 
 //DELETE - usuwanie notatek
@@ -51,7 +51,10 @@ router.get('/notes', async (req: Request, res: Response) => {
     res.json(notes);
 });
 
-//GET - pobieranie ze względu na prywatnośc
-
+//GET - pobieranie ze względu na prywatność
+router.get('/notes', async (req: Request, res: Response) => {
+    const notes = await user.Note.find({ private: true });
+    res.json(notes);
+});
 
 export default router;
