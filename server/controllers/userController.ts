@@ -39,7 +39,7 @@ router.post('/login', (req, res) => {
   User.User.findOne({ email: req.body.email })
     .then((user: mongoose.Document) => {
       if (!user) {
-        res.status(404).json({ error: "User doesn't exist." });
+        res.status(404).json({ error: 'User doesn\'t exist.' });
       } else {
         const userPassword = user.get('password');
         const { password } = req.body;
@@ -53,7 +53,7 @@ router.post('/login', (req, res) => {
                 JWT_KEY,
                 { expiresIn: '1h' }
               );
-              res.status(200).json({ error: 'Auth succesful!', token });
+              res.status(200).json({ error: 'Succesful login!', token });
             } else {
               res.status(404).json({ error: 'Invalid password!' });
             }
@@ -68,7 +68,7 @@ router.post('/login', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   User.User.findById(req.params.id)
-    .then(async (userToRemove) => {
+    .then(async (userToRemove: mongoose.Document) => {
       if (!userToRemove) {
         return res.status(400).json({ error: `Cannot find user with the id of ${req.params.id}` });
       }
@@ -85,7 +85,7 @@ router.delete('/:id', (req, res) => {
 
 router.put('/:id', (req, res) => {
   User.User.findById(req.params.id)
-    .then(async (result) => {
+    .then(async (result: mongoose.Document) => {
       if (!result) {
         return res.status(400).json({ error: `Cannot find user with the id of ${req.params.id}` });
       }
