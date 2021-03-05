@@ -52,7 +52,7 @@ router.get('/notes', async (req: Request, res: Response) => {
 });
 
 //GET - pobieranie ze względu na prywatność
-router.get('/notes', async (req: Request, res: Response) => {
+router.get('/notes/private', async (req: Request, res: Response) => {
     const notes = await user.Note.find({ private: true });
     res.json(notes);
 });
