@@ -6,6 +6,8 @@ import './database.ts';
 
 import plantController from './controllers/plantController';
 import newPlantController from './controllers/newPlantController';
+import userController from './controllers/userController';
+import messageController from './controllers/messageController';
 
 dotenv.config();
 const app = express();
@@ -19,6 +21,8 @@ app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
 
+app.use('/api/user', userController);
+app.use('/api/message', messageController);
 app.use('/api/plant', plantController);
 app.use('/api/newPlant', newPlantController);
 
