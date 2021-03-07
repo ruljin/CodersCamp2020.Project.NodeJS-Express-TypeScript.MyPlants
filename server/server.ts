@@ -4,6 +4,8 @@ import * as cors from 'cors';
 import * as dotenv from 'dotenv';
 import './database.ts';
 
+import messageController from './controllers/messageController';
+
 dotenv.config();
 const app = express();
 const { PORT } = process.env;
@@ -15,5 +17,7 @@ app.use(cors());
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
+
+app.use('/api/message', messageController);
 
 export default app;
