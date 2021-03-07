@@ -4,7 +4,6 @@ import * as cors from 'cors';
 import * as dotenv from 'dotenv';
 import './database.ts';
 
-import userController from './controllers/userController';
 import messageController from './controllers/messageController';
 
 dotenv.config();
@@ -19,7 +18,6 @@ app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
 
-app.use('/api/user', userController);
 app.use('/api/message', messageController);
 
 export default app;
