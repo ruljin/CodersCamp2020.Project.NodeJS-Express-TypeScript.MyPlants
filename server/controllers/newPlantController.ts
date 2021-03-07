@@ -4,7 +4,6 @@ import { Plant } from '../models/plant';
 
 const router = express.Router();
 
-// new plant
 router.post('/', async (req: Request, res: Response) => {
   const newPlant = await Plant.create(req.body);
   await newPlant.save((err: Error) => {

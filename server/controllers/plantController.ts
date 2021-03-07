@@ -5,7 +5,6 @@ import { Plant, Comment } from '../models/plant';
 
 const router = express.Router();
 
-// plant
 router.get('/', async (req: Request, res: Response) => {
   await Plant.find({}, (err: Error, plants: mongoose.Document[]) => {
     if (err) {
@@ -39,7 +38,6 @@ router.delete('/:id', async (req: Request, res: Response) => {
   );
 });
 
-// comment
 router.get('/:id/comments', async (req: Request, res: Response) => {
   const plantId = req.params.id;
   await Plant.findById(plantId, (err: Error, plantObject: mongoose.Document) => {
