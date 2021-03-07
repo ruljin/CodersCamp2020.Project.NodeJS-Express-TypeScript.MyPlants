@@ -4,6 +4,9 @@ import * as cors from 'cors';
 import * as dotenv from 'dotenv';
 import './database.ts';
 
+import plantController from './controllers/plantController';
+import newPlantController from './controllers/newPlantController';
+
 dotenv.config();
 const app = express();
 const { PORT } = process.env;
@@ -15,5 +18,8 @@ app.use(cors());
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
+
+app.use('/api/plant', plantController);
+app.use('/api/newPlant', newPlantController);
 
 export default app;
