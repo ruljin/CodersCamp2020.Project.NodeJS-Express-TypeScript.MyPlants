@@ -10,12 +10,6 @@ const { JWT_KEY } = process.env;
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  User.find({}, (err, users) => {
-    res.send(users);
-  });
-});
-
 router.post('/', (req, res) => {
   User.findOne({ $or: [{ email: req.body.email }, { login: req.body.login }] })
     .then(async (user: mongoose.Document) => {
@@ -62,6 +56,18 @@ router.post('/login', (req, res) => {
             console.error(err);
           });
       }
+    })
+    .catch((err: Error) => console.error(err));
+});
+
+router.get('/:id', (req, res) => {
+  User.findById(req.params.id)
+    .then(async (user: mongoose.Document) => {
+      if (!user) {
+        return res.status(400).json({ error: `Cannot find user with the id of ${req.params.id}` });
+      }
+
+      return res.status(200).json(user).end();
     })
     .catch((err: Error) => console.error(err));
 });
