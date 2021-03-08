@@ -5,7 +5,6 @@ import * as dotenv from 'dotenv';
 import './database.ts';
 
 import plantController from './controllers/plantController';
-import newPlantController from './controllers/newPlantController';
 import userController from './controllers/userController';
 import messageController from './controllers/messageController';
 
@@ -24,6 +23,5 @@ app.listen(PORT, () => {
 app.use('/api/user', userController);
 app.use('/api/message', messageController);
 app.use('/api/plant', plantController);
-app.use('/api/newPlant', newPlantController);
 
 export default app;
