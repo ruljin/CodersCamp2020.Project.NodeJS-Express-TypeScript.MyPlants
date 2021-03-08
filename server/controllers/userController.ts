@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 import * as dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';
 import * as mongoose from 'mongoose';
-import { User } from '../models/user';
+import { User, Note } from '../models/user';
 
 dotenv.config();
 const { JWT_KEY } = process.env;
@@ -33,7 +33,7 @@ router.post('/login', (req, res) => {
   User.findOne({ email: req.body.email })
     .then((user: mongoose.Document) => {
       if (!user) {
-        res.status(404).json({ error: 'User doesn\'t exist.' });
+        res.status(404).json({ error: "User doesn't exist." });
       } else {
         const userPassword = user.get('password');
         const { password } = req.body;
@@ -119,5 +119,87 @@ router.put('/:id', (req, res) => {
     })
     .catch((err: Error) => console.error(err));
 });
+
+router.get('/:id/notes', async (req, res) => {
+  const userId = req.params.id;
+  await User.findById(userId, (err: Error, user: mongoose.Document) => {
+    if (err) {
+      return res.status(404).json({ error: 'Note not found!' }).end();
+    }
+    const userNotes = user.get('notes');
+    return res.status(200).json(userNotes).end();
+  });
+});
+
+router.get('/:id/notes/:nid', async (req, res) => {
+  await User.findById(req.params.id, (err: Error, foundUser: mongoose.Document) => {
+    if (err) {
+      return res.status(404).end();
+    }
+    return foundUser.get('notes').forEach((note) => {
+      if (`${note._id}` === `${req.params.nid}`) {
+        res.status(200).json(note).end();
+      }
+    });
+  });
+});
+
+// router.get('/:id/notes/private', async (req, res) => {
+//   const array = [];
+//   await User.findById(req.params.id, async (err, foundUser) => {
+//     if (err) {
+//       return res.status(404).end();
+//     }
+
+//     foundUser.notes = foundUser.notes.forEach((note) => {
+//       if (`${note.private}` === `${req.body.private}`) {
+//         array.push(note);
+//       }
+//     });
+//     return res.status(200).json(array).end();
+//   });
+// });
+
+router.post('/:id/notes', async (req, res) => {
+  const newNote = new Note(req.body);
+  const userId = req.params.id;
+  await User.findById(userId, (err: Error, userObject: mongoose.Document) => {
+    if (err) {
+      return res.status(404).json({ error: 'Note not found!' }).end();
+    }
+    userObject.get('notes').push(newNote);
+    userObject.save();
+    return res.status(200).end();
+  });
+});
+
+router.delete('/:id/notes/:nid', async (req, res) => {
+  await User.updateOne(
+    { _id: req.params.id },
+    { $pull: { notes: { _id: { $in: [req.params.nid] } } } },
+    {},
+    (err: Error) => {
+      if (err) {
+        return res.status(404).end();
+      }
+      return res.status(200).end();
+    }
+  );
+});
+
+// router.put('/:id/comments/:nid', async (req: Request, res: Response) => {
+//   await User.findById(req.params.id, (err, foundUser) => {
+//     if (err) {
+//       return res.status(404).end();
+//     }
+//     foundUser.notes = foundUser.notes.map((note) => {
+//       if (`${note._id}` === `${req.params.nid}`) {
+//       }
+//       return note;
+//     });
+//     foundUser.save();
+//     return res.status(200).end();
+//   });
+// });
 
 export default router;
