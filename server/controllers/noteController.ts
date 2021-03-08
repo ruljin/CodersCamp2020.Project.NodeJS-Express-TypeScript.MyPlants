@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
+import * as mongoose from 'mongoose';
 import { Note } from '../models/user';
 
 const router = express.Router();
@@ -53,6 +54,22 @@ router.get('/', async (req: Request, res: Response) => {
 router.get('/private', async (req: Request, res: Response) => {
   const notes = await Note.find({ private: true });
   res.json(notes);
+});
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+  await Note.findById(id, (err: Error, note: mongoose.Document) => {
+    if (err) {
+      return res
+        .status(404)
+        .json({ error: 'Note with given id doesn\'t exist' })
+        .end();
+    }
+    return res
+      .status(200)
+      .json(note)
+      .end();
+  });
 });
 
 export default router;

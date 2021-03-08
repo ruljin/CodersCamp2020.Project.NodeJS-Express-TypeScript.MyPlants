@@ -19,6 +19,6 @@ app.listen(PORT, () => {
 });
 
 app.use('/api/user', userController);
-app.use('/api/notes', noteController);
+app.use('/api/user/:id/note', noteController);
 
 export default app;
