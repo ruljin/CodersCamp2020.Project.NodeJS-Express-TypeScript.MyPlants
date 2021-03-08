@@ -5,6 +5,7 @@ import * as dotenv from 'dotenv';
 import './database.ts';
 import userController from './controllers/userController';
 import noteController from './controllers/noteController';
+import messageController from './controllers/messageController';
 
 dotenv.config();
 const app = express();
@@ -20,5 +21,6 @@ app.listen(PORT, () => {
 
 app.use('/api/user', userController);
 app.use('/api/user/:id/note', noteController);
+app.use('/api/message', messageController);
 
 export default app;
