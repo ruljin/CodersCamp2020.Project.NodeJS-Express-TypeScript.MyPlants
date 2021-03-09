@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
 
@@ -26,4 +26,4 @@ app.use('/api/user/:id/note', noteController);
 app.use('/api/message', messageController);
 app.use('/api/plant', plantController);
 
-export default app;
+export default { app, server };

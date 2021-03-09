@@ -21,7 +21,9 @@ module.exports = {
     'no-console': 'off',
     'import/extensions': 'off',
     'no-underscore-dangle': 'off',
-    'no-param-reassign': 'off'
+    'no-param-reassign': 'off',
+    'no-undef': 'off',
+    'global-require': 'off'
   },
   settings: {
     'import/resolver': {
