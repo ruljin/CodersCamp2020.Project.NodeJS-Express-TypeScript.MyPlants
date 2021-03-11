@@ -145,35 +145,23 @@ router.post('/:id/comments/:cid/likes', async (req: Request, res: Response) => {
   });
 });
 
-// { _id: req.params.id },
-// { $pull: { comments: { _id: { $in: [req.params.cid] } } } },
-
 router.delete('/:id/comments/:cid/likes/:lid', async (req: Request, res: Response) => {
-  await Plant.updateOne(
-    { _cid: req.params.cid },
-    { $pull: { 'comments.likes': { _cid: [req.params.lid] } } },
-    {},
-    ((err: Error) => {
-      if (err) {
-        return res.status(404).end();
+  await Plant.findById(req.params.id, (err, plant) => {
+    if (err) {
+      return res.sendStatus(404).end();
+    }
+    plant.comments = plant.comments.map((comment) => {
+      if (`${comment._id}` === `${req.params.cid}`) {
+        comment.likes = comment.likes.filter((like) => `${like._id}` !== `${req.params.lid}`);
+        console.log(comment.likes);
+        return comment;
       }
-      return res.status(200).end();
-    })
-  );
-});
+      return comment;
+    });
 
-// router.delete('/:id/comments/:cid/likes/:lid', async (req: Request, res: Response) => {
-//   await Plant.updateOne(
-//     { _id: req.params.id },
-//     { $pull: { comments: { _id: { likes: { $in: [req.params.lid] } } } } },
-//     {},
-//     ((err: Error) => {
-//       if (err) {
-//         return res.status(404).end();
-//       }
-//       return res.status(200).end();
-//     })
-//   );
-// });
+    plant.save();
+    return res.sendStatus(200).end();
+  });
+});
 
 export default router;
