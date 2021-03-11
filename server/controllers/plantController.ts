@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
 import * as mongoose from 'mongoose';
-import { Plant, Comment } from '../models/plant';
+import { Plant, Comment, Like } from '../models/plant';
 
 const router = express.Router();
 
@@ -110,5 +110,56 @@ router.put('/:id/comments/:cid', async (req: Request, res: Response) => {
     return res.status(200).end();
   });
 });
+
+router.post('/:id/comments/:cid/likes', async (req: Request, res: Response) => {
+  await Plant.findById(req.params.id, (err, foundPlant) => {
+    if (err) {
+      return res.status(404).end();
+    }
+    foundPlant.comments = foundPlant.comments.map((comment) => {
+      if (`${comment._id}` === `${req.params.cid}`) {
+        comment.likes_count += 1;
+        const likes = comment.get('likes');
+        const newLike = new Like(req.body);
+        likes.push(newLike);
+      }
+      return comment;
+    });
+    foundPlant.save();
+    return res.status(200).end();
+  });
+});
+
+
+// { _id: req.params.id },
+// { $pull: { comments: { _id: { $in: [req.params.cid] } } } },
+
+router.delete('/:id/comments/:cid/likes/:lid', async (req: Request, res: Response) => {
+  await Comment.updateOne(
+    { _cid: req.params.cid },
+    { $pull: { likes: { _cid: { $in: [req.params.lid] } } } },
+    {},
+    ((err: Error) => {
+      if (err) {
+        return res.status(404).end();
+      }
+      return res.status(200).end();
+    })
+  );
+});
+
+// router.delete('/:id/comments/:cid/likes/:lid', async (req: Request, res: Response) => {
+//   await Plant.updateOne(
+//     { _id: req.params.id },
+//     { $pull: { comments: { _id: { likes: { $in: [req.params.lid] } } } } },
+//     {},
+//     ((err: Error) => {
+//       if (err) {
+//         return res.status(404).end();
+//       }
+//       return res.status(200).end();
+//     })
+//   );
+// });
 
 export default router;

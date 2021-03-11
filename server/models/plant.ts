@@ -2,6 +2,19 @@ import * as mongoose from 'mongoose';
 
 const defaultPlantUrl = 'https://res.cloudinary.com/ded5al291/image/upload/v1614255324/My%20Plants/logo-plant-leaf_bsnbcb.png';
 
+export const LikeSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required: true
+  },
+  comment: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'comment',
+    required: true
+  }
+});
+
 export const CommentSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -19,6 +32,14 @@ export const CommentSchema = new mongoose.Schema({
   image_path: {
     type: String,
     default: ''
+  },
+  likes: {
+    type: [LikeSchema],
+    required: true
+  },
+  likes_count: {
+    type: Number,
+    default: 0
   }
 });
 
@@ -106,6 +127,7 @@ export const PlantSchema = new mongoose.Schema({
   }
 });
 
+export const Like = mongoose.model('like', LikeSchema);
 export const Comment = mongoose.model('comment', CommentSchema);
 export const Toxicity = mongoose.model('toxicity', ToxicitySchema);
 export const Plant = mongoose.model('plant', PlantSchema);
