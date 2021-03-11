@@ -6,5 +6,6 @@ describe('GET /user', () => {
     request(app)
       .get('/api/user/603bd36cd5b57809e4fd4bc3')
       .expect(200, done);
+    done();
   });
 });
