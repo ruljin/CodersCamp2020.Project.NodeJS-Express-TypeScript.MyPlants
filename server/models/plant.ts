@@ -7,11 +7,6 @@ export const LikeSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
     required: true
-  },
-  comment: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'comment',
-    required: true
   }
 });
 
@@ -36,10 +31,6 @@ export const CommentSchema = new mongoose.Schema({
   likes: {
     type: [LikeSchema],
     required: true
-  },
-  likes_count: {
-    type: Number,
-    default: 0
   }
 });
 
