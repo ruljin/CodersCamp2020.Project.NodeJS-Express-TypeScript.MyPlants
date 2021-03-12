@@ -152,7 +152,6 @@ describe('/plant for comments', () => {
           text: 'NEW Test comment changed'
         })
         .expect(200, done);
-      done();
     });
   });
 });

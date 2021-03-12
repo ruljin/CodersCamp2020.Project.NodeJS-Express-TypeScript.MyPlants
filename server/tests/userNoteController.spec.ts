@@ -10,17 +10,13 @@ const testUser = {
   surname: 'user',
   admin: false,
   plants: [],
-  notes: [
-    {
-      title: 'new public note',
-      text: 'sample public text'
-    }
-  ]
+  notes: []
 };
 
 const testNote = {
   title: 'test note',
-  text: 'sample text'
+  text: 'sample text',
+  private: true
 };
 
 describe('/tests for user notes', () => {
@@ -44,7 +40,7 @@ describe('/tests for user notes', () => {
     });
     it('GET notes by ID', (done) => {
       request(app)
-        .get(`/api/user/${testedUser.id}}/notes/${testedNote.id}`)
+        .get(`/api/user/${testedUser.id}/notes/${testedNote.id}`)
         .expect(200, done);
     });
   });
@@ -55,7 +51,8 @@ describe('/tests for user notes', () => {
         .post(`/api/user/${testedUser.id}/notes/`)
         .send({
           title: 'tytul',
-          text: 'tresc notki'
+          text: 'tresc notki',
+          private: true
         })
         .expect(200, done);
     });
@@ -73,10 +70,11 @@ describe('/tests for user notes', () => {
         .put(`/api/user/${testedUser.id}/notes/${testedNote.id}`)
         .send({
           title: 'nowy tytul',
-          text: 'nowa tresc'
+          text: 'nowa tresc',
+          private: true,
+          plant: '11111111111'
         })
         .expect(200, done);
-      done();
     });
   });
 });
