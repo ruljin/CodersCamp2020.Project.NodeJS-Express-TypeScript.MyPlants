@@ -39,7 +39,7 @@
     "start:production": "cross-env NODE_ENV=production ts-node ./server/server.ts",
     "nodemon": "nodemon ./server/server.ts",
     "lint": "eslint server --ext .ts",
-    "test": "cross-env NODE_ENV=development jest"
+    "test": "cross-env NODE_ENV=development jest --forceExit --maxWorkers=1 --detectOpenHandles"
   },
   "jest": {
     "moduleFileExtensions": [
