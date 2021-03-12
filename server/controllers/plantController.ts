@@ -71,7 +71,7 @@ router.get('/:id/comments', async (req: Request, res: Response) => {
   });
 });
 
-router.post('/:id/comments', async (req: Request, res: Response) => {
+router.post('/:id/comments', isAuth, async (req: Request, res: Response) => {
   const newComment = new Comment(req.body);
   const plantId = req.params.id;
   await Plant.findById(plantId, (err: Error, plantObject: mongoose.Document) => {
@@ -84,7 +84,7 @@ router.post('/:id/comments', async (req: Request, res: Response) => {
   });
 });
 
-router.delete('/:id/comments/:cid', async (req: Request, res: Response) => {
+router.delete('/:id/comments/:cid', isAuth, async (req: Request, res: Response) => {
   await Plant.updateOne(
     { _id: req.params.id },
     { $pull: { comments: { _id: { $in: [req.params.cid] } } } },
@@ -98,7 +98,7 @@ router.delete('/:id/comments/:cid', async (req: Request, res: Response) => {
   );
 });
 
-router.put('/:id/comments/:cid', async (req: Request, res: Response) => {
+router.put('/:id/comments/:cid', isAuth, async (req: Request, res: Response) => {
   await Plant.findById(req.params.id, (err, foundPlant) => {
     if (err) {
       return res.status(404).end();
