@@ -22,8 +22,8 @@ describe('/tests for user', () => {
   });
 
   describe('GET', () => {
-    it('GET user by id', async (done) => {
-      await request(app).get(`/api/user/${testedUser.id}`).expect(200, done);
+    it('GET user by id', (done) => {
+      request(app).get(`/api/user/${testedUser.id}`).expect(200, done);
     });
   });
 
