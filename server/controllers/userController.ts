@@ -62,7 +62,7 @@ router.post('/login', (req: Request, res: Response) => {
     .catch((err: Error) => console.error(err));
 });
 
-router.get('/:id', (req: Request, res: Response) => {
+router.get('/:id', isAuth, (req: Request, res: Response) => {
   User.findById(req.params.id)
     .then(async (user: mongoose.Document) => {
       if (!user) {
@@ -122,7 +122,7 @@ router.put('/:id', isAuth, (req: Request, res: Response) => {
     .catch((err: Error) => console.error(err));
 });
 
-router.get('/:id/notes', async (req: Request, res: Response) => {
+router.get('/:id/notes', isAuth, async (req: Request, res: Response) => {
   const userId = req.params.id;
   await User.findById(userId, (err: Error, user: mongoose.Document) => {
     if (err) {
@@ -133,7 +133,7 @@ router.get('/:id/notes', async (req: Request, res: Response) => {
   });
 });
 
-router.get('/:id/notes/:nid', async (req: Request, res: Response) => {
+router.get('/:id/notes/:nid', isAuth, async (req: Request, res: Response) => {
   await User.findById(req.params.id, (err: Error, foundUser: mongoose.Document) => {
     if (err) {
       return res.status(404).end();
@@ -146,7 +146,7 @@ router.get('/:id/notes/:nid', async (req: Request, res: Response) => {
   });
 });
 
-router.post('/:id/notes', async (req: Request, res: Response) => {
+router.post('/:id/notes', isAuth, async (req: Request, res: Response) => {
   const newNote = new Note(req.body);
   const userId = req.params.id;
   await User.findById(userId, (err: Error, userObject: mongoose.Document) => {
@@ -159,7 +159,7 @@ router.post('/:id/notes', async (req: Request, res: Response) => {
   });
 });
 
-router.delete('/:id/notes/:nid', async (req: Request, res: Response) => {
+router.delete('/:id/notes/:nid', isAuth, async (req: Request, res: Response) => {
   await User.updateOne(
     { _id: req.params.id },
     { $pull: { notes: { _id: { $in: [req.params.nid] } } } },
@@ -173,7 +173,7 @@ router.delete('/:id/notes/:nid', async (req: Request, res: Response) => {
   );
 });
 
-router.put('/:id/notes/:nid', async (req: Request, res: Response) => {
+router.put('/:id/notes/:nid', isAuth, async (req: Request, res: Response) => {
   await User.findById(req.params.id, (err, foundUser) => {
     if (err) {
       return res.status(404).end();
