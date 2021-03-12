@@ -30,10 +30,10 @@ router.post('/', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  User.findOne({ email: req.body.email })
+  User.findOne({ login: req.body.login })
     .then((user: mongoose.Document) => {
       if (!user) {
-        res.status(404).json({ error: 'User doesn\'t exist.' });
+        res.status(404).json({ error: "User doesn't exist." });
       } else {
         const userPassword = user.get('password');
         const { password } = req.body;
