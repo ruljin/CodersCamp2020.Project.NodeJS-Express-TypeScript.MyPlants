@@ -1,6 +1,11 @@
 import * as mongoose from 'mongoose';
 
 export const MessageSchema = new mongoose.Schema({
+  chat_name: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'chat',
+    required: true
+  },
   text: {
     type: String,
     required: true

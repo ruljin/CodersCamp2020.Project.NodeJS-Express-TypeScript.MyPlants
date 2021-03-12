@@ -9,10 +9,12 @@ router.post('/', async (req, res) => {
   }
 
   const message = await Message.create(req.body.date ? {
+    chat: req.body.chat,
     text: req.body.text,
     user: req.body.user,
     date: req.body.date
   } : {
+    chat: req.body.chat,
     text: req.body.text,
     user: req.body.user
   });
