@@ -55,10 +55,8 @@ describe('/POST tests for user', () => {
     request(app).get(`/api/plant/${testedPlant.id}`).expect(200, done);
   });
 
-  describe('GET comments', () => {
-    it('GET all comments of a plant', (done) => {
-      request(app).get(`/api/plant/${testedPlant.id}/comments`).expect(200, done);
-    });
+  test('GET all comments of a plant', (done) => {
+    request(app).get(`/api/plant/${testedPlant.id}/comments`).expect(200, done);
   });
 });
 
@@ -166,11 +164,11 @@ describe('/POST tests for user', () => {
       });
   });
 
-  it('PUT change plant to accepted', (done) => {
+  test('PUT change plant to accepted', (done) => {
     request(app).put(`/api/plant/${testedPlant.id}`).set('Authorization', `Bearer ${tokenAdmin}`).expect(200, done);
   });
 
-  it('DELETE delete one plant', (done) => {
+  test('DELETE delete one plant', (done) => {
     request(app).delete(`/api/plant/${testedPlant.id}`).set('Authorization', `Bearer ${tokenAdmin}`).expect(200, done);
   });
 });
