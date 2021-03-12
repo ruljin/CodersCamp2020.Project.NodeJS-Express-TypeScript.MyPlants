@@ -39,6 +39,7 @@ describe('/plant for plants', () => {
 
   beforeEach(async () => {
     await Plant.deleteMany({ });
+    await Comment.deleteMany({ });
     testedPlant = await Plant.create(testPlant);
   });
 
@@ -107,6 +108,7 @@ describe('/plant for comments', () => {
 
   beforeEach(async () => {
     await Plant.deleteMany({ });
+    await Comment.deleteMany({ });
     testedPlant = await Plant.create(testPlant);
     testedComment = await Comment.create(testComment);
     testedPlant.get('comments').push(testedComment);
