@@ -27,7 +27,21 @@ describe('/tests for user', () => {
     });
   });
 
-  describe('POST /user', () => {
+  describe('PUT', () => {
+    it('PUT user', (done) => {
+      request(app).put(`/api/user/${testedUser.id}`).expect(200, done);
+    });
+  });
+
+  describe('DELETE', () => {
+    it('DELETE one user', (done) => {
+      request(app).delete(`/api/user/${testedUser.id}`).expect(200, done);
+    });
+  });
+});
+
+describe('/POST tests for user', () => {
+  describe('POST', () => {
     it('POST user (register)', (done) => {
       request(app)
         .post('/api/user/')
@@ -50,18 +64,6 @@ describe('/tests for user', () => {
           password: 'newUser'
         })
         .expect(200, done);
-    });
-  });
-
-  describe('PUT', () => {
-    it('PUT user', (done) => {
-      request(app).put(`/api/user/${testedUser.id}`).expect(200, done);
-    });
-  });
-
-  describe('DELETE', () => {
-    it('DELETE one user', (done) => {
-      request(app).delete(`/api/user/${testedUser.id}`).expect(200, done);
     });
   });
 });
