@@ -29,7 +29,7 @@ describe('/tests for user', () => {
 
   describe('PUT', () => {
     it('PUT user', (done) => {
-      request(app).put(`/api/user/${testedUser.id}`).expect(200, done);
+      request(app).put(`/api/user/${testedUser.id}`).send({ surname: 'newSurname' }).expect(200, done);
     });
   });
 
