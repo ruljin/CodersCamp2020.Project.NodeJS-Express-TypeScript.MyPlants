@@ -6,7 +6,6 @@ import './database.ts';
 
 import plantController from './controllers/plantController';
 import userController from './controllers/userController';
-import noteController from './controllers/noteController';
 import messageController from './controllers/messageController';
 
 dotenv.config();
@@ -17,7 +16,6 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/api/user', userController);
-app.use('/api/user/:id/note', noteController);
 app.use('/api/message', messageController);
 app.use('/api/plant', plantController);
 
