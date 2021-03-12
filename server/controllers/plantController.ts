@@ -64,7 +64,8 @@ router.get('/:id/comments', async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Comments not found!' }).end();
     }
     const plantComments = plantObject.get('comments');
-    return res.status(200).json(plantComments).end();
+    const sortedComments = plantComments.sort((a, b) => b.likes.length - a.likes.length);
+    return res.status(200).json(sortedComments).end();
   });
 });
 
