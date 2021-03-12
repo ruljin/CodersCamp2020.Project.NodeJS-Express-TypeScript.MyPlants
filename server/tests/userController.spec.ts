@@ -1,5 +1,5 @@
-import * as request from 'supertest';
-import app from '../server';
+import request from 'supertest';
+import app from '../app';
 import { User } from '../models/user';
 
 const newUser = {
