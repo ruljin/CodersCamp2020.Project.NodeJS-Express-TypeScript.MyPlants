@@ -115,7 +115,7 @@ router.put('/:id/comments/:cid', isAuth, async (req: Request, res: Response) => 
   });
 });
 
-router.get('/:id/comments/:cid/likes', async (req: Request, res: Response) => {
+router.get('/:id/comments/:cid/likes', isAuth, async (req: Request, res: Response) => {
   await Plant.findById(req.params.id, (err, foundPlant) => {
     if (err) {
       return res.status(404).end();
@@ -131,7 +131,7 @@ router.get('/:id/comments/:cid/likes', async (req: Request, res: Response) => {
   });
 });
 
-router.post('/:id/comments/:cid/likes', async (req: Request, res: Response) => {
+router.post('/:id/comments/:cid/likes', isAuth, async (req: Request, res: Response) => {
   await Plant.findById(req.params.id, (err, foundPlant) => {
     if (err) {
       return res.status(404).end();
@@ -149,7 +149,7 @@ router.post('/:id/comments/:cid/likes', async (req: Request, res: Response) => {
   });
 });
 
-router.delete('/:id/comments/:cid/likes/:lid', async (req: Request, res: Response) => {
+router.delete('/:id/comments/:cid/likes/:lid', isAuth, async (req: Request, res: Response) => {
   await Plant.findById(req.params.id, (err, plant) => {
     if (err) {
       return res.sendStatus(404).end();

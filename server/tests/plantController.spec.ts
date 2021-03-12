@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from '../app';
-import { Plant, Comment } from '../models/plant';
+import { Plant, Comment, Like } from '../models/plant';
 
 const testPlant = {
   name: 'BIG test!',
@@ -20,7 +20,12 @@ const testPlant = {
   comments: [
     {
       user: '123456789102',
-      text: 'BIG Test comment in plant'
+      text: 'BIG Test comment in plant',
+      likes: [
+        {
+          user: '123456789101'
+        }
+      ]
     }
   ],
   toxicity: {
@@ -31,7 +36,16 @@ const testPlant = {
 
 const testComment = {
   user: '123456789101',
-  text: 'BIG Test comment'
+  text: 'BIG Test comment',
+  likes: [
+    {
+      user: '123456789102'
+    }
+  ]
+};
+
+const testLike = {
+  user: '123456789101'
 };
 
 describe('/POST tests for all users', () => {
@@ -63,6 +77,7 @@ describe('/POST tests for all users', () => {
 describe('/POST tests for logged user (isAuth)', () => {
   let testedPlant;
   let testedComment;
+  let testedLike;
 
   let tokenUser;
 
@@ -79,8 +94,12 @@ describe('/POST tests for logged user (isAuth)', () => {
   beforeEach(async () => {
     await Plant.deleteMany({});
     await Comment.deleteMany({});
+    await Like.deleteMany({});
     testedPlant = await Plant.create(testPlant);
     testedComment = await Comment.create(testComment);
+    testedLike = await Like.create(testLike);
+    testedComment.get('likes').push(testedLike);
+    testedComment.save();
     testedPlant.get('comments').push(testedComment);
     testedPlant.save();
   });
@@ -118,7 +137,8 @@ describe('/POST tests for logged user (isAuth)', () => {
       .post(`/api/plant/${testedPlant.id}/comments`)
       .send({
         user: '123456789103',
-        text: 'NEW Test comment'
+        text: 'NEW Test comment',
+        likes: []
       })
       .set('Authorization', `Bearer ${tokenUser}`)
       .expect(200, done);
@@ -140,7 +160,30 @@ describe('/POST tests for logged user (isAuth)', () => {
       })
       .set('Authorization', `Bearer ${tokenUser}`)
       .expect(200, done);
-    done();
+  });
+
+  test('GET respond with json containing all likes', (done) => {
+    request(app)
+      .get(`/api/plant/${testedPlant.id}/comments/${testedComment.id}/likes`)
+      .set('Authorization', `Bearer ${tokenUser}`)
+      .expect(200, done);
+  });
+
+  test('POST new like of a comment', (done) => {
+    request(app)
+      .post(`/api/plant/${testedPlant.id}/comments/${testedComment.id}/likes`)
+      .send({
+        user: '123456789103'
+      })
+      .set('Authorization', `Bearer ${tokenUser}`)
+      .expect(200, done);
+  });
+
+  it('DELETE like', (done) => {
+    request(app)
+      .delete(`/api/plant/${testedPlant.id}/comments/${testedComment.id}/likes/${testedLike.id}`)
+      .set('Authorization', `Bearer ${tokenUser}`)
+      .expect(200, done);
   });
 });
 
