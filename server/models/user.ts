@@ -28,6 +28,13 @@ const NoteSchema = new mongoose.Schema({
   }
 });
 
+const FavouriteSchema = new mongoose.Schema({
+  username: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user'
+  }
+});
+
 const UserSchema = new mongoose.Schema({
   login: {
     type: String,
@@ -59,8 +66,10 @@ const UserSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'plant'
   },
-  notes: [NoteSchema]
+  notes: [NoteSchema],
+  favourites: [FavouriteSchema]
 });
 
 export const User = mongoose.model('user', UserSchema);
 export const Note = mongoose.model('note', NoteSchema);
+export const Favourite = mongoose.model('favourites', FavouriteSchema);
