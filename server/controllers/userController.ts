@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';
 import * as mongoose from 'mongoose';
 import { Request, Response } from 'express';
+import { isAuth } from '../middleware/check-auth';
 import { User, Note } from '../models/user';
 
 dotenv.config();
@@ -73,7 +74,7 @@ router.get('/:id', (req: Request, res: Response) => {
     .catch((err: Error) => console.error(err));
 });
 
-router.delete('/:id', (req: Request, res: Response) => {
+router.delete('/:id', isAuth, (req: Request, res: Response) => {
   User.findById(req.params.id)
     .then(async (userToRemove: mongoose.Document) => {
       if (!userToRemove) {
@@ -90,7 +91,7 @@ router.delete('/:id', (req: Request, res: Response) => {
     .catch((err: Error) => console.error(err));
 });
 
-router.put('/:id', (req: Request, res: Response) => {
+router.put('/:id', isAuth, (req: Request, res: Response) => {
   User.findById(req.params.id)
     .then(async (result: mongoose.Document) => {
       if (!result) {
@@ -163,12 +164,12 @@ router.delete('/:id/notes/:nid', async (req: Request, res: Response) => {
     { _id: req.params.id },
     { $pull: { notes: { _id: { $in: [req.params.nid] } } } },
     {},
-    ((err: Error) => {
+    (err: Error) => {
       if (err) {
         return res.status(404).end();
       }
       return res.status(200).end();
-    })
+    }
   );
 });
 
