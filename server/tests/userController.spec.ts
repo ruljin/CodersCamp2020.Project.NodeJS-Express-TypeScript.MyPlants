@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from '../app';
-import { User } from '../models/user';
+import { User, Note } from '../models/user';
 
 const newUser = {
   name: 'test',
@@ -11,6 +11,23 @@ const newUser = {
   admin: false,
   notes: [],
   plants: []
+};
+
+const testUserWithNote = {
+  login: 'login',
+  email: 'email',
+  password: 'password',
+  name: 'userWithNote',
+  surname: 'user',
+  admin: false,
+  plants: [],
+  notes: []
+};
+
+const testNote = {
+  title: 'test note',
+  text: 'sample text',
+  private: true
 };
 
 describe('/tests for all user', () => {
@@ -59,10 +76,16 @@ describe('/tests for all user', () => {
 
 describe('/tests for logged user (is Auth)', () => {
   let testedUser;
+  let testedUserWithNote;
+  let testedNote;
   let tokenUser;
 
   beforeAll(async (done) => {
     testedUser = await User.create(newUser);
+    testedUserWithNote = await User.create(testUserWithNote);
+    testedNote = await Note.create(testNote);
+    testedUserWithNote.get('notes').push(testedNote);
+    testedUserWithNote.save();
     request(app)
       .post('/api/user/login')
       .send({ email: 'user', password: 'user' })
@@ -73,7 +96,7 @@ describe('/tests for logged user (is Auth)', () => {
   });
 
   test('GET user by id', (done) => {
-    request(app).get(`/api/user/${testedUser.id}`).expect(200, done);
+    request(app).get(`/api/user/${testedUser.id}`).set('Authorization', `Bearer ${tokenUser}`).expect(200, done);
   });
 
   test('PUT user', (done) => {
@@ -86,5 +109,51 @@ describe('/tests for logged user (is Auth)', () => {
 
   test('DELETE one user', (done) => {
     request(app).delete(`/api/user/${testedUser.id}`).set('Authorization', `Bearer ${tokenUser}`).expect(200, done);
+  });
+
+  test('GET all notes', (done) => {
+    request(app)
+      .get(`/api/user/${testedUserWithNote.id}/notes/`)
+      .set('Authorization', `Bearer ${tokenUser}`)
+      .expect(200, done);
+  });
+
+  test('GET notes by ID', (done) => {
+    request(app)
+      .get(`/api/user/${testedUserWithNote.id}/notes/${testedNote.id}`)
+      .set('Authorization', `Bearer ${tokenUser}`)
+      .expect(200, done);
+  });
+
+  test('POST note', (done) => {
+    request(app)
+      .post(`/api/user/${testedUserWithNote.id}/notes/`)
+      .send({
+        title: 'tytul',
+        text: 'tresc notki',
+        private: true
+      })
+      .set('Authorization', `Bearer ${tokenUser}`)
+      .expect(200, done);
+  });
+
+  test('DELETE note', (done) => {
+    request(app)
+      .delete(`/api/user/${testedUserWithNote.id}/notes/${testedNote.id}`)
+      .set('Authorization', `Bearer ${tokenUser}`)
+      .expect(200, done);
+  });
+
+  test('PUT changes to note', (done) => {
+    request(app)
+      .put(`/api/user/${testedUserWithNote.id}/notes/${testedNote.id}`)
+      .send({
+        title: 'nowy tytul',
+        text: 'nowa tresc',
+        private: true,
+        plant: '11111111111'
+      })
+      .set('Authorization', `Bearer ${tokenUser}`)
+      .expect(200, done);
   });
 });
