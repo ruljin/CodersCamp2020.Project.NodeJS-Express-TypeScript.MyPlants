@@ -1,8 +1,8 @@
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 require('custom-env').env(`${process.env.NODE_ENV}`, './server/config/');
 
-mongoose.connect(`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}${process.env.MONGODB_URL}`, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}${process.env.MONGODB_URL}`, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 
 const database = mongoose.connection;
 
