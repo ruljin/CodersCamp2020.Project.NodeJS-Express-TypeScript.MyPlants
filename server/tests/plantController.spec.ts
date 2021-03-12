@@ -38,21 +38,17 @@ describe('/plant for plants', () => {
   let testedPlant;
 
   beforeEach(async () => {
-    await Plant.deleteMany({ });
-    await Comment.deleteMany({ });
+    await Plant.deleteMany({});
+    await Comment.deleteMany({});
     testedPlant = await Plant.create(testPlant);
   });
 
   describe('GET', () => {
     it('GET respond with json containing all plants', (done) => {
-      request(app)
-        .get('/api/plant/')
-        .expect(200, done);
+      request(app).get('/api/plant/').expect(200, done);
     });
     it('GET get plant by ID', (done) => {
-      request(app)
-        .get(`/api/plant/${testedPlant.id}`)
-        .expect(200, done);
+      request(app).get(`/api/plant/${testedPlant.id}`).expect(200, done);
     });
   });
 
@@ -81,6 +77,10 @@ describe('/plant for plants', () => {
             animal: true
           }
         })
+        .set(
+          'Authorization',
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNGI4MzZjODk3Mjg3MGRmNGI0MTkzOCIsImVtYWlsIjoidXNlciIsImFkbWluIjpmYWxzZSwiaWF0IjoxNjE1NTYxNTg0LCJleHAiOjE2MTU1NjUxODR9.g7PZcMNNf_hpNbgYpYeRarvTyvKFAWyXo3K0c8Qb9Wo'
+        )
         .expect(200, done);
     });
   });
@@ -89,6 +89,10 @@ describe('/plant for plants', () => {
     it('PUT change plant to accepted', (done) => {
       request(app)
         .put(`/api/plant/${testedPlant.id}`)
+        .set(
+          'Authorization',
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNGI4MzM4ODk3Mjg3MGRmNGI0MTkzNyIsImVtYWlsIjoiYWRtaW4iLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjE1NTYxNTUwLCJleHAiOjE2MTU1NjUxNTB9.KLrndG1xl4Kq4Vrr3rLpDu8I1QepHpWVDqqff3jXzb4'
+        )
         .expect(200, done);
     });
   });
@@ -97,6 +101,10 @@ describe('/plant for plants', () => {
     it('DELETE delete one plant', (done) => {
       request(app)
         .delete(`/api/plant/${testedPlant.id}`)
+        .set(
+          'Authorization',
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNGI4MzM4ODk3Mjg3MGRmNGI0MTkzNyIsImVtYWlsIjoiYWRtaW4iLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjE1NTYxNTUwLCJleHAiOjE2MTU1NjUxNTB9.KLrndG1xl4Kq4Vrr3rLpDu8I1QepHpWVDqqff3jXzb4'
+        )
         .expect(200, done);
     });
   });
@@ -107,8 +115,8 @@ describe('/plant for comments', () => {
   let testedComment;
 
   beforeEach(async () => {
-    await Plant.deleteMany({ });
-    await Comment.deleteMany({ });
+    await Plant.deleteMany({});
+    await Comment.deleteMany({});
     testedPlant = await Plant.create(testPlant);
     testedComment = await Comment.create(testComment);
     testedPlant.get('comments').push(testedComment);
@@ -117,9 +125,7 @@ describe('/plant for comments', () => {
 
   describe('GET comments', () => {
     it('GET all comments of a plant', (done) => {
-      request(app)
-        .get(`/api/plant/${testedPlant.id}/comments`)
-        .expect(200, done);
+      request(app).get(`/api/plant/${testedPlant.id}/comments`).expect(200, done);
     });
   });
 
@@ -137,9 +143,7 @@ describe('/plant for comments', () => {
 
   describe('DELETE comment', () => {
     it('DELETE comment', (done) => {
-      request(app)
-        .delete(`/api/plant/${testedPlant.id}/comments/${testedComment.id}`)
-        .expect(200, done);
+      request(app).delete(`/api/plant/${testedPlant.id}/comments/${testedComment.id}`).expect(200, done);
     });
   });
 

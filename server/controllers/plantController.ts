@@ -2,6 +2,7 @@ import * as express from 'express';
 import { Request, Response } from 'express';
 import * as mongoose from 'mongoose';
 import { Plant, Comment } from '../models/plant';
+import { isAuth, isAdmin } from '../middleware/check-auth';
 
 const router = express.Router();
 
@@ -18,13 +19,16 @@ router.get('/:id', async (req: Request, res: Response) => {
   const plantId = req.params.id;
   await Plant.findById(plantId, (err: Error, plantObject: mongoose.Document) => {
     if (err) {
-      return res.status(404).json({ error: `Cannot find plant with id: ${plantId}` }).end();
+      return res
+        .status(404)
+        .json({ error: `Cannot find plant with id: ${plantId}` })
+        .end();
     }
     return res.status(200).json(plantObject).end();
   });
 });
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', isAuth, async (req: Request, res: Response) => {
   const newPlant = await Plant.create(req.body);
   await newPlant.save((err: Error) => {
     if (err) {
@@ -34,7 +38,7 @@ router.post('/', async (req: Request, res: Response) => {
   });
 });
 
-router.put('/:id', async (req: Request, res: Response) => {
+router.put('/:id', isAdmin, async (req: Request, res: Response) => {
   await Plant.findByIdAndUpdate(req.params.id, { accepted: true }, { new: true }, (err: Error) => {
     if (err) {
       return res.status(404).json({ error: 'Plant not saved!' }).end();
@@ -43,18 +47,17 @@ router.put('/:id', async (req: Request, res: Response) => {
   });
 });
 
-router.delete('/:id', async (req: Request, res: Response) => {
+router.delete('/:id', isAdmin, async (req: Request, res: Response) => {
   const plantId = req.params.id;
-  await Plant.findByIdAndDelete(
-    plantId,
-    {},
-    (err: Error, plantObject: mongoose.Document) => {
-      if (err) {
-        return res.status(404).json({ error: 'Cannot find this plant!' }).end();
-      }
-      return res.status(200).json({ response: `${plantObject} was deleted.` }).end();
+  await Plant.findByIdAndDelete(plantId, {}, (err: Error, plantObject: mongoose.Document) => {
+    if (err) {
+      return res.status(404).json({ error: 'Cannot find this plant!' }).end();
     }
-  );
+    return res
+      .status(200)
+      .json({ response: `${plantObject} was deleted.` })
+      .end();
+  });
 });
 
 router.get('/:id/comments', async (req: Request, res: Response) => {
@@ -86,12 +89,12 @@ router.delete('/:id/comments/:cid', async (req: Request, res: Response) => {
     { _id: req.params.id },
     { $pull: { comments: { _id: { $in: [req.params.cid] } } } },
     {},
-    ((err: Error) => {
+    (err: Error) => {
       if (err) {
         return res.status(404).end();
       }
       return res.status(200).end();
-    })
+    }
   );
 });
 
