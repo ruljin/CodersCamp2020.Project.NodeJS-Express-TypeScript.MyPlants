@@ -34,7 +34,7 @@ const testComment = {
   text: 'BIG Test comment'
 };
 
-describe('/POST tests for user', () => {
+describe('/POST tests for all users', () => {
   let testedPlant;
   let testedComment;
 
@@ -60,7 +60,7 @@ describe('/POST tests for user', () => {
   });
 });
 
-describe('/POST tests for user (isAuth)', () => {
+describe('/POST tests for logged user (isAuth)', () => {
   let testedPlant;
   let testedComment;
 
@@ -144,7 +144,7 @@ describe('/POST tests for user (isAuth)', () => {
   });
 });
 
-describe('/POST tests for user', () => {
+describe('/POST tests for admin (isAdmin)', () => {
   let tokenAdmin;
   let testedPlant;
 
