@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { isAuth, isAdmin } from '../middleware/check-auth';
+import { isAdmin } from '../middleware/check-auth';
 import { Message } from '../models/message';
 
 const router = express.Router();
