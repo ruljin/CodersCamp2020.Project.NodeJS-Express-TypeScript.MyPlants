@@ -1,4 +1,5 @@
 import * as express from 'express';
+import { isAuth, isAdmin } from '../middleware/check-auth';
 import { Message } from '../models/message';
 
 const router = express.Router();
@@ -28,7 +29,7 @@ router.get('/', async (req, res) => {
   res.json(messages);
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', isAdmin, async (req, res) => {
   const query = { _id: req.params.id };
   const message = await Message.findById(req.params.id);
 

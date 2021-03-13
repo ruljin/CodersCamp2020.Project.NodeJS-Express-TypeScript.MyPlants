@@ -42,6 +42,7 @@ describe('POST message endpoint', () => {
 });
 
 describe('DELETE message endpoint', () => {
+  let tokenAdmin;
   let testMessage;
 
   beforeEach(async () => {
@@ -53,9 +54,26 @@ describe('DELETE message endpoint', () => {
     });
   });
 
+  beforeAll((done) => {
+    request(app)
+      .post('/api/user/login')
+      .send({ email: 'admin', password: 'admin' })
+      .end((err, res) => {
+        tokenAdmin = res.body.token;
+        done();
+      });
+  });
+
   it('should delete message', (done) => {
     request(app)
       .delete(`/api/message/${testMessage.id}`)
+      .set('Authorization', `Bearer ${tokenAdmin}`)
       .expect(200, done);
+  });
+
+  it('should be unauthorized to delete message', (done) => {
+    request(app)
+      .delete(`/api/message/${testMessage.id}`)
+      .expect(401, done);
   });
 });
