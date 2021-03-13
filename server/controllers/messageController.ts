@@ -1,10 +1,10 @@
 import * as express from 'express';
-import { isAdmin } from '../middleware/check-auth';
+import { isAuth, isAdmin } from '../middleware/check-auth';
 import { Message } from '../models/message';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', isAuth, async (req, res) => {
   if (!req.body.text) {
     res.status(400).json({ msg: 'You have to specify text of the message' });
   }

@@ -8,11 +8,25 @@ describe('GET message endpoint', () => {
   });
 
   it('should return all messages', (done) => {
-    request(app).get('/api/message/').expect(200, done);
+    request(app)
+      .get('/api/message/')
+      .expect(200, done);
   });
 });
 
 describe('POST message endpoint', () => {
+  let tokenUser;
+
+  beforeAll((done) => {
+    request(app)
+      .post('/api/user/login')
+      .send({ email: 'user', password: 'user' })
+      .end((err, res) => {
+        tokenUser = res.body.token;
+        done();
+      });
+  });
+
   beforeEach(async () => {
     await Message.deleteMany({});
   });
@@ -26,6 +40,7 @@ describe('POST message endpoint', () => {
         user: '123456789101',
         date: '2021-03-12'
       })
+      .set('Authorization', `Bearer ${tokenUser}`)
       .expect(200, done);
   });
 
@@ -37,7 +52,19 @@ describe('POST message endpoint', () => {
         text: 'Hello it\'s test',
         user: '123456789101'
       })
+      .set('Authorization', `Bearer ${tokenUser}`)
       .expect(200, done);
+  });
+
+  it('should be unauthorized to post new message', (done) => {
+    request(app)
+      .post('/api/message/')
+      .send({
+        chat: '123456789101',
+        text: 'Hello it\'s test',
+        user: '123456789101'
+      })
+      .expect(401, done);
   });
 });
 
