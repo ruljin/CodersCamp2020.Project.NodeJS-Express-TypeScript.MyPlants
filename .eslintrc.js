@@ -22,7 +22,9 @@ module.exports = {
     'import/extensions': 'off',
     'no-underscore-dangle': 'off',
     'no-param-reassign': 'off',
-    'array-callback-return': 'off'
+    'array-callback-return': 'off',
+    'no-undef': 'off',
+    'global-require': 'off'
   },
   settings: {
     'import/resolver': {
