@@ -8,6 +8,7 @@ import plantController from './controllers/plantController';
 import userController from './controllers/userController';
 import noteController from './controllers/noteController';
 import messageController from './controllers/messageController';
+import calendarController from './controllers/calendarController';
 
 dotenv.config();
 const app = express();
@@ -25,5 +26,6 @@ app.use('/api/user', userController);
 app.use('/api/user/:id/note', noteController);
 app.use('/api/message', messageController);
 app.use('/api/plant', plantController);
+app.use('/api/calendar', calendarController);
 
 export default app;
