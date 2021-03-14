@@ -56,7 +56,7 @@ router.put('/user/:id/event/:eid', async (req, res) => {
   });
 });
 
-router.get('/:month', async (req, res) => {
+router.get('/month/:month', async (req, res) => {
   if (Number.isNaN(parseInt(req.params.month, 10))) {
     return res.sendStatus(400).json({ error: 'Required parametr "month" to be a type of number' });
   }
