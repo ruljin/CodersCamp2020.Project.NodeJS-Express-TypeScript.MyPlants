@@ -9,6 +9,11 @@ const NoteSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  plant: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'plant',
+    required: true
+  },
   timestamp: {
     type: Date,
     default: Date.now
