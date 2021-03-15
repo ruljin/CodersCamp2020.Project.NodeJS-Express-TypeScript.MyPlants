@@ -13,3 +13,5 @@ router.post('/', async (req, res) => {
   await chat.save();
   res.status(200).json(chat);
 });
+
+export default router;
