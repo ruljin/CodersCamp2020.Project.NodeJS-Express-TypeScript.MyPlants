@@ -90,7 +90,8 @@ const UserSchema = new mongoose.Schema({
     ref: 'plant'
   },
   notes: [NoteSchema],
-  calendar: CalendarSchema
+  calendar: CalendarSchema,
+  favourites: [FavouriteSchema]
 });
 
 export const Event = mongoose.model('event', EventSchema);

@@ -189,7 +189,7 @@ router.put('/:id/notes/:nid', isAuth, async (req: Request, res: Response) => {
   });
 });
 
-router.post('/:id/favourites', async (req: Request, res: Response) => {
+router.post('/:id/favourites', isAuth, async (req: Request, res: Response) => {
   const favUser = new Favourites(req.body);
   const userId = req.params.id;
   await User.findById(userId, (err: Error, favObj: mongoose.Document) => {
@@ -202,7 +202,7 @@ router.post('/:id/favourites', async (req: Request, res: Response) => {
   });
 });
 
-router.get('/:id/favourites', async (req: Request, res: Response) => {
+router.get('/:id/favourites', isAuth, async (req: Request, res: Response) => {
   const userId = req.params.id;
   await User.findById(userId, (err: Error, user: mongoose.Document) => {
     if (err) {
@@ -213,7 +213,7 @@ router.get('/:id/favourites', async (req: Request, res: Response) => {
   });
 });
 
-router.delete('/:id/favourites/:fid', async (req: Request, res: Response) => {
+router.delete('/:id/favourites/:fid', isAuth, async (req: Request, res: Response) => {
   await User.updateOne(
     { _id: req.params.id },
     { $pull: { favourites: { _id: { $in: [req.params.fid] } } } },
