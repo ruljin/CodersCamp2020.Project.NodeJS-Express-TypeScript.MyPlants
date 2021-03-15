@@ -28,13 +28,13 @@ Our project is an application for plant lovers. Users can share their plants as 
 
 ## Features
 -	User can create their profil and login. 
--   After logging in User can add notes to their profile, which would be kind of a journal about taking care of their plants. User may choose if the note is private (only he/she can see it) or public (all logged in users can see it).
--   User can create profiles for the plants their own. They can add pictures of them and description. 
--   There is the database of plants created. Users may also update it (their updates need to be accepted by administrator first). The idea of it is to create a collection of many plant species which can be owned at home with its description and tips how to take care of them. In front-end user will be able to use filter to search for the plant (by knowing their name, or choosing the environment they have at home, so our app will choose the plants which meet those conditions). Also, users may add comments about plants. Users may 'like' those comments. Comments will be displayed according to the numeber of likes (most liked comment will be shown first). 
--   Users can add other user's profiles to their favourites, so they can follow their plants. 
--   There is a chat created. So far there are two channels. Main one, for general discussion about plants, where users can ask questions or share their experience. Second one is dedicated for trade, where users can sell or exchange their plants or equipment. 
--   Users can use a calendar when they can add events - for example reminders to water their plants. 
--   We have used authentication. Main database of plants can be seen by all users. Users' profiles, their plants, comments and notes as well as chat may be seen by logged in users. Admins can accept new plants in main database as well as update them. 
+-   After logging in User can add notes to their profile, which would be kind of a journal about taking care of their plants. User may choose if the note is private (only he/she can see it) or public (all logged in Users can see it).
+-   User can create profiles for the plants their have at home. They can add pictures of them and description. 
+-   There is the database of plants created. Users may also update it (their updates need to be accepted by administrator first). The idea of it is to create a collection of many plant species which can be owned at home with its description and tips how to take care of them. In front-end User will be able to use filter to search for the plant (by knowing their name, or choosing the environment they have at home, so our app will choose the plants which meet those conditions). Also, Users may add comments about plants. Users may 'like' those comments. Comments will be displayed according to the numeber of likes (most liked comment will be shown first). 
+-   Users can add other User's profiles to their favourites, so they can follow their plants. 
+-   There is a chat created. So far there are two channels. Main one, for general discussion about plants, where Users can ask questions or share their experience. Second one is dedicated for trade, where Users can sell or exchange their plants or equipment. 
+-   Users can use a calendar where they can add events - for example reminders to water their plants. 
+-   We have used authentication. Main database of plants can be seen by all Users. Users' profiles, their plants, comments and notes as well as chat may be seen by logged in Users. Admins can accept new plants in main database as well as update them. 
 
 ## Technologies
 -   ESLint
@@ -50,7 +50,7 @@ Our project is an application for plant lovers. Users can share their plants as 
 
 ## Setup
 #### Demo
-To view a demo click [here]( ).
+To view a demo click [here]( //TBA ).
 
 #### Getting started
 If you want to run the application on the local machine, follow these steps:
