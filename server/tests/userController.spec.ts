@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from '../app';
-import { User, Note } from '../models/user';
+import { User, Note, Favourites } from '../models/user';
 
 const newUser = {
   name: 'test',
@@ -10,7 +10,8 @@ const newUser = {
   password: 'test',
   admin: false,
   notes: [],
-  plants: []
+  plants: [],
+  favourites: []
 };
 
 const testUserWithNote = {
@@ -24,11 +25,27 @@ const testUserWithNote = {
   notes: []
 };
 
+const testUserWithFavourites = {
+  login: 'userTest',
+  email: 'emailTest',
+  password: 'password',
+  name: 'userWWithFavorite',
+  surname: 'userFav',
+  admin: false,
+  plants: [],
+  notes: [],
+  favourites: []
+};
+
 const testNote = {
   title: 'test note',
   text: 'sample text',
   plant: '123123123123',
   private: true
+};
+
+const favourites = {
+  user: '123456789876'
 };
 
 describe('/tests for all user', () => {
@@ -80,11 +97,18 @@ describe('/tests for logged user (is Auth)', () => {
   let testedUserWithNote;
   let testedNote;
   let tokenUser;
+  let testedFav;
+  let testedUserWithFavourites;
 
   beforeAll(async (done) => {
+    await Note.deleteMany({});
     testedUser = await User.create(newUser);
     testedUserWithNote = await User.create(testUserWithNote);
+    testedUserWithFavourites = await User.create(testUserWithFavourites);
     testedNote = await Note.create(testNote);
+    testedFav = await Favourites.create(favourites);
+    testedUserWithFavourites.get('favourites').push(favourites);
+    testedUserWithFavourites.save();
     testedUserWithNote.get('notes').push(testedNote);
     testedUserWithNote.save();
     request(app)
@@ -94,6 +118,10 @@ describe('/tests for logged user (is Auth)', () => {
         tokenUser = res.body.token;
         done();
       });
+
+    beforeEach(async () => {
+      await Favourites.deleteMany({ });
+    });
   });
 
   test('GET user by id', (done) => {
@@ -155,6 +183,30 @@ describe('/tests for logged user (is Auth)', () => {
         private: true,
         plant: '11111111111'
       })
+      .set('Authorization', `Bearer ${tokenUser}`)
+      .expect(200, done);
+  });
+
+  test('POST user to favourites', (done) => {
+    request(app)
+      .post(`/api/user/${testedUserWithFavourites.id}/favourites/`)
+      .send({
+        user: '123456789876'
+      })
+      .set('Authorization', `Bearer ${tokenUser}`)
+      .expect(200, done);
+  });
+
+  test('GET favourite users', (done) => {
+    request(app)
+      .get(`/api/user/${testedUserWithFavourites.id}/favourites/`)
+      .set('Authorization', `Bearer ${tokenUser}`)
+      .expect(200, done);
+  });
+
+  test('DELETE favourite user', (done) => {
+    request(app)
+      .delete(`/api/user/${testedUserWithFavourites.id}/favourites/${testedFav.id}`)
       .set('Authorization', `Bearer ${tokenUser}`)
       .expect(200, done);
   });
