@@ -50,7 +50,7 @@ Our project is an application for plant lovers. Users can share their plants as 
 
 ## Setup
 #### Demo
-To view a demo click [here]( //TBA ).
+To view a demo click [here](https://coderscamp-plantme.herokuapp.com/).
 
 #### Getting started
 If you want to run the application on the local machine, follow these steps:
