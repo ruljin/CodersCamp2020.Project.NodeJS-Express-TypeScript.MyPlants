@@ -76,7 +76,7 @@ describe('testing calendar API', () => {
 
   test('GET events by month', (done) => {
     request(app)
-      .get('/api/calendar/month/2')
+      .get('/api/calendar/2')
       .set('Authorization', `Bearer ${token}`)
       .expect(200, done);
   });
