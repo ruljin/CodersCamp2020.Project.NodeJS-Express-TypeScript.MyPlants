@@ -98,6 +98,7 @@ describe('/tests for logged user (is Auth)', () => {
   let testedUserWithFavourites;
 
   beforeAll(async (done) => {
+    await Note.deleteMany({});
     testedUser = await User.create(newUser);
     testedUserWithNote = await User.create(testUserWithNote);
     testedUserWithFavourites = await User.create(testUserWithFavourites);
