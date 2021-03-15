@@ -5,7 +5,8 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   },
   "include": [
     "server/**/*.ts"

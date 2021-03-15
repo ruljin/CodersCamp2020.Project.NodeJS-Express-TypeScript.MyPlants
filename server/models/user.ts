@@ -51,6 +51,13 @@ export const CalendarSchema = new mongoose.Schema({
   }
 });
 
+const FavouriteSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user'
+  }
+});
+
 const UserSchema = new mongoose.Schema({
   login: {
     type: String,
@@ -83,10 +90,12 @@ const UserSchema = new mongoose.Schema({
     ref: 'plant'
   },
   notes: [NoteSchema],
-  calendar: CalendarSchema
+  calendar: CalendarSchema,
+  favourites: [FavouriteSchema]
 });
 
 export const Event = mongoose.model('event', EventSchema);
 export const Calendar = mongoose.model('calendar', CalendarSchema);
 export const User = mongoose.model('user', UserSchema);
 export const Note = mongoose.model('note', NoteSchema);
+export const Favourites = mongoose.model('favourites', FavouriteSchema);
