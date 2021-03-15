@@ -24,7 +24,7 @@ Authors of this project are course participants who worked under the supervision
 **Mentor:** [Filip Kuca](https://github.com/ruljin) 
 
 ## General info
-Our project is an application for plant lovers. Users can share their plants as well as experpience with taking care of them with other users. This part of project is focused on backend features. Application is called MyPlants. 
+Our project is an application for plant lovers. Users can share their plants as well as experience with taking care of them with other users. This part of project is focused on backend features. Application is called MyPlants. 
 
 ## Features
 -	User can create their profil and login. 
