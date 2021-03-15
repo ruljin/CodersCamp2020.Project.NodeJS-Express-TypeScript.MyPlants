@@ -1,9 +1,10 @@
 import * as express from 'express';
 import { User, Event } from '../models/user';
+import { isAuth } from '../middleware/check-auth';
 
 const router = express.Router();
 
-router.get('/user/:id', async (req, res) => {
+router.get('/user/:id', isAuth, async (req, res) => {
   await User.findById(req.params.id)
     .then(async (user: any) => {
       if (!user) {
@@ -15,7 +16,7 @@ router.get('/user/:id', async (req, res) => {
     .catch((err: Error) => console.log(err));
 });
 
-router.post('/user/:id/event', async (req, res) => {
+router.post('/user/:id/event', isAuth, async (req, res) => {
   await User.findById(req.params.id, (err, user) => {
     if (err) {
       return res.sendStatus(404).end();
@@ -26,7 +27,7 @@ router.post('/user/:id/event', async (req, res) => {
   });
 });
 
-router.delete('/user/:id/event/:eid', async (req, res) => {
+router.delete('/user/:id/event/:eid', isAuth, async (req, res) => {
   await User.findById(req.params.id)
     .then((user: any) => {
       if (!user) {
@@ -38,7 +39,7 @@ router.delete('/user/:id/event/:eid', async (req, res) => {
     });
 });
 
-router.put('/user/:id/event/:eid', async (req, res) => {
+router.put('/user/:id/event/:eid', isAuth, async (req, res) => {
   await User.findById(req.params.id, (err, user) => {
     if (err) {
       return res.sendStatus(404).end();
@@ -56,7 +57,7 @@ router.put('/user/:id/event/:eid', async (req, res) => {
   });
 });
 
-router.get('/:month', async (req, res) => {
+router.get('/:month', isAuth, async (req, res) => {
   if (Number.isNaN(parseInt(req.params.month, 10))) {
     return res.sendStatus(400).json({ error: 'Required parametr "month" to be a type of number' });
   }
