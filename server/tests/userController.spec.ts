@@ -82,6 +82,7 @@ describe('/tests for logged user (is Auth)', () => {
   let tokenUser;
 
   beforeAll(async (done) => {
+    await Note.deleteMany({});
     testedUser = await User.create(newUser);
     testedUserWithNote = await User.create(testUserWithNote);
     testedNote = await Note.create(testNote);
