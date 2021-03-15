@@ -195,7 +195,7 @@ router.post('/:id/favourites', async (req: Request, res: Response) => {
     if (err) {
       return res.status(404).json({ error: 'Not found.' }).end();
     }
-    favObj.get('favourite').push(favUser);
+    favObj.get('favourites').push(favUser);
     favObj.save();
     return res.status(200).end();
   });

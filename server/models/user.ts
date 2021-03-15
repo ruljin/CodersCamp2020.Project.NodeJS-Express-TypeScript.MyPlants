@@ -29,7 +29,7 @@ const NoteSchema = new mongoose.Schema({
 });
 
 const FavouriteSchema = new mongoose.Schema({
-  username: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user'
   }
