@@ -1,0 +1,1033 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "MyPlants API",
+    "description": "MyPlants API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "https://coderscamp-plantme.herokuapp.com",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "User",
+      "description": "API for user in the system"
+    },
+    {
+      "name": "Plant",
+      "description": "API for plant in the system"
+    },
+    {
+      "name": "Chat",
+      "description": "API for chat in the system"
+    },
+    {
+      "name": "Message",
+      "description": "API for messages in the system"
+    },
+    {
+      "name": "Note",
+      "description": "API for note in the system"
+    },
+    {
+      "name": "Comment",
+      "description":"API for comment in the system"
+    },
+    {
+      "name": "Like",
+      "description":"API for like in the system"
+    },
+    {
+      "name": "Calendar",
+      "description": "API for calendar in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/user/": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create user",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New user is created"
+          },
+          "409": {
+            "description": "Email or login exists"
+          }
+        }
+      } 
+    },
+    "/user/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Login user",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "schema": {
+              "$ref": "#/components/Login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/Token"
+            }
+          },
+          "404": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user by id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete user by id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "response": {
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          },
+          "409": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}/notes": {
+      "get": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Get all user`s notes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Note"
+            }
+          },
+          "404": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Add new user`s notes",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}/notes/{nid}": {
+      "get": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Get user`s note by id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Note"
+            }
+          },
+          "404": {
+            "description": "ERROR"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Delete user`s note by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "ERROR"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Update user`s note by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "ERROR"
+          }
+        }
+      }
+    },
+    "/plant/": {
+      "get": {
+        "tags": [
+          "Plant"
+        ],
+        "summary": "Get all plants",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Plant"
+            }
+          },
+          "404": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Plant"
+        ],
+        "summary": "Add new plant",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Plant"
+            }
+          },
+          "404": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      }
+    },
+    "/plant/{id}": {
+      "get": {
+        "tags": [
+          "Plant"
+        ],
+        "summary": "Get plant by id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Plant"
+            }
+          },
+          "404": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Plant"
+        ],
+        "summary": "Update plant by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Plant"
+        ],
+        "summary": "Delete plant by id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "response": {
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      }
+    },
+    "/plant/{id}/comments": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Get all plant`s comments sorted by likes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Comment"
+            }
+          },
+          "404": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Add new comment to plant",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      }
+    },
+    "/plant/{id}/comments/{cid}": {
+      "delete": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Delete comment by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "ERROR"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Update comment by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "ERROR"
+          }
+        }
+      }
+    },
+    "/plant/{id}/comments/{cid}/likes": {
+      "get": {
+        "tags": [
+          "Like"
+        ],
+        "summary": "Get comment`s likes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref":"#/definitions/Like"
+            }
+          },
+          "404": {
+            "description": "ERROR"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Like"
+        ],
+        "summary": "Add like to comment by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "ERROR"
+          }
+        }
+      }
+    },
+    "/plant/{id}/comments/{cid}/likes/{lid}": {
+      "delete": {
+        "tags": [
+          "Like"
+        ],
+        "summary": "Delete like from comment by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "ERROR"
+          }
+        }
+      }
+    },
+    "/message/": {
+      "post": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Add messege",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref":"#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Message"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Get all messeges",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref":"#/definitions/Message"
+            },
+            "limit": "50"
+          }
+        }
+      }
+    },
+    "/message/{id}": {
+      "delete": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Delete message by id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/Message"
+            }
+          },
+          "400": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Message"
+            }
+          }
+        }
+      }
+    },
+    "/chat/": {
+      "post": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Create new chat",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Chat"
+            }
+          },
+          "400": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Message"
+            }
+          }
+        }
+      }
+    },
+    "/calendar/user/{id}": {
+      "get": {
+        "tags": [
+          "Calendar"
+        ],
+        "summary": "Get user`s calendar",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Calendar"
+            }
+          },
+          "404": {
+            "description": "ERROR"
+          }
+        }
+      }
+    },
+    "/calendar/user/{id}/event": {
+      "post": {
+        "tags": [
+          "Calendar"
+        ],
+        "summary": "Add new event to calendar",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "ERROR"
+          }
+        }
+      }
+    },
+    "/calendar/user/{id}/event/{eid}": {
+      "delete": {
+        "tags": [
+          "Calendar"
+        ],
+        "summary": "Delete event by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "ERROR"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Calendar"
+        ],
+        "summary": "Update event by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "ERROR"
+          }
+        }
+      }
+    },
+    "/calendar/month": {
+      "get": {
+        "tags": [
+          "Calendar"
+        ],
+        "summary": "Get all user`s events by month",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          },
+          "400": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Calendar"
+        ],
+        "summary": "Update event by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "ERROR"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Note": {
+      "required": [
+        "_id",
+        "title",
+        "text",
+        "private"
+      ],
+      "properties": {
+        "_id": {
+          "type": "objectId",
+          "uniqueItems": true
+        },
+        "title": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "date"
+        },
+        "image": {
+          "type": "string"
+        },
+        "private": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Event": {
+      "required": [
+        "_id",
+        "name",
+        "date"
+      ],
+      "properties": {
+        "_id": {
+          "type": "objectId",
+          "uniqueItems": true
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "author": {
+          "type": "objectId"
+        },
+        "date": {
+          "type": "date"
+        }
+      }
+    },
+    "Calendar": {
+      "required": [
+        "_id"
+      ],
+      "properties": {
+        "_id": {
+          "type": "objectId",
+          "uniqueItems": true
+        },
+        "events": {
+          "type": "array",
+          "$ref": "#/definitions/Event"
+        }
+      }
+    }, 
+    "User": {
+      "required": [
+        "_id",
+        "login",
+        "email",
+        "password",
+        "name",
+        "surname",
+        "admin"
+      ],
+      "properties": {
+        "_id": {
+          "type": "objectId",
+          "uniqueItems": true
+        },
+        "login": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        },
+        "admin": {
+          "type": "boolean"
+        },
+        "plants": {
+          "type": "array",
+          "$ref":"#/definitions/Plant"
+        },
+        "notes": {
+          "type": "array",
+          "$ref":"#/definitions/Note"
+        },
+        "calendar": {
+          "type": "Object"
+        }
+      }
+    },
+    "Chat": {
+      "required": [
+        "_id",
+        "name"
+      ],
+      "properties": {
+        "_id": {
+          "type": "objectId",
+          "uniqueItems": true
+        },
+        "name": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    },
+    "Message": {
+      "required": [
+        "_id",
+        "chat",
+        "text",
+        "user"
+      ],
+      "properties": {
+        "_id": {
+          "type": "objectId",
+          "uniqueItems": true
+        },
+        "chat": {
+          "type": "objectId"
+        },
+        "text": {
+          "type": "string"
+        },
+        "user": {
+          "type": "objectId",
+          "uniqueItems": true
+        },
+        "date": {
+          "type": "date"
+        }
+      }
+    },
+    "Like": {
+      "required": [
+        "_id",
+        "user"
+      ],
+      "properties": {
+        "_id": {
+          "type": "objectId",
+          "uniqueItems": true
+        },
+        "user": {
+          "type": "objectId",
+          "uniqueItems": true
+        }
+      }
+    },
+    "Comment": {
+      "required": [
+        "_id",
+        "user",
+        "text",
+        "likes"
+      ],
+      "properties": {
+        "_id": {
+          "type": "objectId",
+          "uniqueItems": true
+        },
+        "user": {
+          "type": "objectId",
+          "uniqueItems": true
+        },
+        "timestamp": {
+          "type": "date"
+        },
+        "text": {
+          "type": "string"
+        },
+        "image_path": {
+          "type": "string"
+        },
+        "likes": {
+          "type": "array",
+          "$ref":"#/definitions/Like"
+        }
+      }
+    },
+    "Toxicity": {
+      "required": [
+        "_id",
+        "human",
+        "animal"
+      ],
+      "properties": {
+        "_id": {
+          "type": "objectId",
+          "uniqueItems": true
+        },
+        "human": {
+          "type": "boolean"
+        },
+        "animal": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Plant": {
+      "required": [
+        "_id",
+        "name",
+        "latin_name",
+        "min_temperature",
+        "max_temperature",
+        "watering",
+        "watering_method",
+        "subsoil",
+        "conditioners",
+        "spraying",
+        "sunlight",
+        "humidity",
+        "application",
+        "accepted",
+        "species",
+        "toxicity"
+      ],
+      "properties": {
+        "_id": {
+          "type": "objectId",
+          "uniqueItems": true
+        },
+        "name": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "latin_name": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "min_temperature": {
+          "type": "number"
+        },
+        "max_temperature": {
+          "type": "number"
+        },
+        "watering": {
+          "type": "string"
+        },
+        "watering_method": {
+          "type": "string"
+        },
+        "subsoil": {
+          "type": "string"
+        },
+        "conditioners": {
+          "type": "string"
+        },
+        "spraying": {
+          "type": "string"
+        },
+        "sunlight": {
+          "type": "string"
+        },
+        "humidity": {
+          "type": "string"
+        },
+        "application": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "accepted": {
+          "type": "boolean"
+        },
+        "species": {
+          "type": "objectId",
+          "uniqueItems": true
+        },
+        "comments": {
+          "type": "array",
+          "$ref":"#/definitions/Comment"
+        },
+        "toxicity": {
+          "type": "array",
+          "$ref":"#/definitions/Toxicity"
+        }
+      }
+    },
+    "Species": {
+      "required": [
+        "_id",
+        "name"
+      ],
+      "properties": {
+        "_id": {
+          "type": "objectId",
+          "uniqueItems": true
+        },
+        "name": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    }
+  },
+  "components": {
+    "Error": {
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "Message": {
+      "properties": {
+        "msg": {
+          "type": "string"
+        }
+      }
+    },
+    "Login": {
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Token": {
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "response": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
