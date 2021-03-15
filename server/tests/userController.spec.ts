@@ -26,11 +26,14 @@ const testUserWithNote = {
 };
 
 const testUserWithFavourites = {
-  name: 'test',
-  email: 'email',
+  login: 'userTest',
+  email: 'emailTest',
   password: 'password',
-  notes: [],
+  name: 'userWWithFavorite',
+  surname: 'userFav',
+  admin: false,
   plants: [],
+  notes: [],
   favourites: []
 };
 
