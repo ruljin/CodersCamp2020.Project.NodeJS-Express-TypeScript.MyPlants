@@ -27,6 +27,7 @@ const testUserWithNote = {
 const testNote = {
   title: 'test note',
   text: 'sample text',
+  plant: '123123123123',
   private: true
 };
 
@@ -81,6 +82,7 @@ describe('/tests for logged user (is Auth)', () => {
   let tokenUser;
 
   beforeAll(async (done) => {
+    await Note.deleteMany({});
     testedUser = await User.create(newUser);
     testedUserWithNote = await User.create(testUserWithNote);
     testedNote = await Note.create(testNote);
@@ -131,6 +133,7 @@ describe('/tests for logged user (is Auth)', () => {
       .send({
         title: 'tytul',
         text: 'tresc notki',
+        plant: '123123123123',
         private: true
       })
       .set('Authorization', `Bearer ${tokenUser}`)
