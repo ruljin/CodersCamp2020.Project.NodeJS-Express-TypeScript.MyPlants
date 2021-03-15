@@ -72,4 +72,4 @@ const UserSchema = new mongoose.Schema({
 
 export const User = mongoose.model('user', UserSchema);
 export const Note = mongoose.model('note', NoteSchema);
-export const Favourite = mongoose.model('favourites', FavouriteSchema);
+export const Favourites = mongoose.model('favourites', FavouriteSchema);

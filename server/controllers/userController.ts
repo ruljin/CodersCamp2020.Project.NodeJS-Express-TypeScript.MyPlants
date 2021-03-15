@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';
 import * as mongoose from 'mongoose';
 import { Request, Response } from 'express';
-import { User, Note, Favourite } from '../models/user';
+import { User, Note, Favourites } from '../models/user';
 
 dotenv.config();
 const { JWT_KEY } = process.env;
@@ -189,7 +189,7 @@ router.put('/:id/notes/:nid', async (req: Request, res: Response) => {
 });
 
 router.post('/:id/favourites', async (req: Request, res: Response) => {
-  const favUser = new Favourite(req.body);
+  const favUser = new Favourites(req.body);
   const userId = req.params.id;
   await User.findById(userId, (err: Error, favObj: mongoose.Document) => {
     if (err) {
