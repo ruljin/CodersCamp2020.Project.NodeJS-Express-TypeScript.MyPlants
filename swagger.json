@@ -678,8 +678,9 @@
       ],
       "properties": {
         "_id": {
-          "type": "objectId",
-          "uniqueItems": true
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
         },
         "title": {
           "type": "string"
@@ -688,7 +689,8 @@
           "type": "string"
         },
         "timestamp": {
-          "type": "date"
+          "type": "date",
+          "format": "data-time"
         },
         "image": {
           "type": "string"
@@ -706,8 +708,9 @@
       ],
       "properties": {
         "_id": {
-          "type": "objectId",
-          "uniqueItems": true
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
         },
         "title": {
           "type": "string"
@@ -716,10 +719,12 @@
           "type": "string"
         },
         "author": {
-          "type": "objectId"
+          "type": "string",
+          "format": "ObjectId"
         },
         "date": {
-          "type": "date"
+          "type": "date",
+          "format": "data-time"
         }
       }
     },
@@ -729,8 +734,9 @@
       ],
       "properties": {
         "_id": {
-          "type": "objectId",
-          "uniqueItems": true
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
         },
         "events": {
           "type": "array",
@@ -750,8 +756,9 @@
       ],
       "properties": {
         "_id": {
-          "type": "objectId",
-          "uniqueItems": true
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
         },
         "login": {
           "type": "string",
@@ -793,8 +800,9 @@
       ],
       "properties": {
         "_id": {
-          "type": "objectId",
-          "uniqueItems": true
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
         },
         "name": {
           "type": "string",
@@ -811,21 +819,25 @@
       ],
       "properties": {
         "_id": {
-          "type": "objectId",
-          "uniqueItems": true
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
         },
         "chat": {
-          "type": "objectId"
+          "type": "string",
+          "format": "ObjectId"
         },
         "text": {
           "type": "string"
         },
         "user": {
-          "type": "objectId",
-          "uniqueItems": true
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
         },
         "date": {
-          "type": "date"
+          "type": "date",
+          "format": "data-time"
         }
       }
     },
@@ -836,12 +848,14 @@
       ],
       "properties": {
         "_id": {
-          "type": "objectId",
-          "uniqueItems": true
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
         },
         "user": {
-          "type": "objectId",
-          "uniqueItems": true
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
         }
       }
     },
@@ -854,15 +868,18 @@
       ],
       "properties": {
         "_id": {
-          "type": "objectId",
-          "uniqueItems": true
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
         },
         "user": {
-          "type": "objectId",
-          "uniqueItems": true
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
         },
         "timestamp": {
-          "type": "date"
+          "type": "string",
+          "format": "data-time"
         },
         "text": {
           "type": "string"
@@ -884,8 +901,9 @@
       ],
       "properties": {
         "_id": {
-          "type": "objectId",
-          "uniqueItems": true
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
         },
         "human": {
           "type": "boolean"
@@ -916,8 +934,9 @@
       ],
       "properties": {
         "_id": {
-          "type": "objectId",
-          "uniqueItems": true
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
         },
         "name": {
           "type": "string",
@@ -964,8 +983,9 @@
           "type": "boolean"
         },
         "species": {
-          "type": "objectId",
-          "uniqueItems": true
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
         },
         "comments": {
           "type": "array",
@@ -984,8 +1004,9 @@
       ],
       "properties": {
         "_id": {
-          "type": "objectId",
-          "uniqueItems": true
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
         },
         "name": {
           "type": "string",
