@@ -132,7 +132,7 @@ describe('/tests for logged user (is Auth)', () => {
   test('PUT user', (done) => {
     request(app)
       .put(`/api/user/${testedUser.id}`)
-      .send({ surname: 'newSurname' })
+      .send({ surname: 'newSurname', password: 'password', confirmPassword: 'password' })
       .set('Authorization', `Bearer ${tokenUser}`)
       .expect(200, done);
   });

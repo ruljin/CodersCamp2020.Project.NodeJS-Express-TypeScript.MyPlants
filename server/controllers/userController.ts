@@ -118,36 +118,63 @@ router.delete('/:id', isAuth, (req: Request, res: Response) => {
     .catch((err: Error) => console.error(err));
 });
 
-router.put('/:id', isAuth, (req: Request, res: Response) => {
-  User.findById(req.params.id)
-    .then(async (result: mongoose.Document) => {
-      if (!result) {
-        return res.status(400).json({ error: `Cannot find user with the id of ${req.params.id}` });
+router.put(
+  '/:id',
+  [
+    body('login').optional().custom((value) => User.findOne({ login: value }).then((user) => {
+      if (user) {
+        return Promise.reject(new Error('Login exists already, please pick a different one.'));
       }
 
-      if (req.body.password) {
+      return null;
+    })),
+    body('email').optional()
+      .isEmail()
+      .withMessage('Please enter a valid email.')
+      .custom((value) => User.findOne({ email: value }).then((user) => {
+        if (user) {
+          return Promise.reject(new Error('E-mail exists already, please pick a different one.'));
+        }
+
+        return null;
+      })),
+    body('password')
+      .notEmpty()
+      .withMessage('Please enter a password.')
+      .isLength({ min: 5 })
+      .withMessage('Please enter a password with at least 5 characters.'),
+    body('confirmPassword')
+      .custom((value, { req }) => {
+        if (value !== req.body.password) {
+          throw new Error('Password have to match!');
+        }
+
+        return true;
+      }),
+    body('name').optional().isAlpha().withMessage('Name must be alphabetic.'),
+    body('surname').optional().isAlpha().withMessage('Surname must be alphabetic.')
+  ],
+  isAuth,
+  (req: Request, res: Response) => {
+    User.findById(req.params.id)
+      .then(async (result: mongoose.Document) => {
+        if (!result) {
+          return res.status(400).json({ error: `Cannot find user with the id of ${req.params.id}` });
+        }
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array()[0].msg });
+        }
+
         req.body.password = await bcrypt.hash(req.body.password, 12);
-      }
+        req.body.confirmPassword = await bcrypt.hash(req.body.confirmPassword, 12);
 
-      if (req.body.email || req.body.login) {
-        await User.findOne({ $or: [{ email: req.body.email }, { login: req.body.login }] })
-          .then((user: mongoose.Document) => {
-            if (user) {
-              if (user.get('email') === req.body.email) {
-                res.status(409).json({ error: 'Email is taken!' });
-              } else {
-                res.status(409).json({ error: 'Login is taken!' });
-              }
-            }
-          })
-          .catch((error) => console.error(error));
-      }
-
-      await User.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
-      return res.status(200).end();
-    })
-    .catch((err: Error) => console.error(err));
-});
+        await User.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
+        return res.status(200).end();
+      })
+      .catch((err: Error) => console.error(err));
+  }
+);
 
 router.get('/:id/notes', isAuth, async (req: Request, res: Response) => {
   const userId = req.params.id;
