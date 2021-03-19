@@ -40,7 +40,9 @@ router.post(
       }
 
       return true;
-    })
+    }),
+    body('name').isAlpha().withMessage('Name must be alphabetic.'),
+    body('surname').isAlpha().withMessage('Surname must be alphabetic.')
   ],
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
