@@ -3,6 +3,7 @@ import * as bcrypt from 'bcrypt';
 import * as dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';
 import * as mongoose from 'mongoose';
+import { body, validationResult } from 'express-validator';
 import { Request, Response } from 'express';
 import { isAuth } from '../middleware/check-auth';
 import { User, Note, Favourites } from '../models/user';
@@ -12,24 +13,48 @@ const { JWT_KEY } = process.env;
 
 const router = express.Router();
 
-router.post('/', (req: Request, res: Response) => {
-  User.findOne({ $or: [{ email: req.body.email }, { login: req.body.login }] })
-    .then(async (user: mongoose.Document) => {
+router.post(
+  '/',
+  [
+    body('login').custom((value) => User.findOne({ login: value }).then((user) => {
       if (user) {
-        if (user.get('email') === req.body.email) {
-          res.status(409).json({ error: 'Email exist!' });
-        } else {
-          res.status(409).json({ error: 'Login exist!' });
-        }
-      } else {
-        req.body.password = await bcrypt.hash(req.body.password, 12);
-        const newUser = new User(req.body);
-        newUser.save();
-        res.sendStatus(200).end();
+        return Promise.reject(new Error('Login exists already, please pick a different one.'));
       }
+
+      return null;
+    })),
+    body('email')
+      .isEmail()
+      .withMessage('Please enter a valid email.')
+      .custom((value) => User.findOne({ email: value }).then((user) => {
+        if (user) {
+          return Promise.reject(new Error('E-mail exists already, please pick a different one.'));
+        }
+
+        return null;
+      })),
+    body('password').isLength({ min: 5 }).withMessage('Please enter a password with at least 5 characters.'),
+    body('confirmPassword').custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error('Password have to match!');
+      }
+
+      return true;
     })
-    .catch((err: Error) => console.error(err));
-});
+  ],
+  async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array()[0].msg });
+    }
+
+    req.body.password = await bcrypt.hash(req.body.password, 12);
+    req.body.confirmPassword = await bcrypt.hash(req.body.confirmPassword, 12);
+    const newUser = new User(req.body);
+    newUser.save();
+    return res.sendStatus(200).end();
+  }
+);
 
 router.post('/login', (req: Request, res: Response) => {
   User.findOne({ email: req.body.email })
@@ -218,12 +243,12 @@ router.delete('/:id/favourites/:fid', isAuth, async (req: Request, res: Response
     { _id: req.params.id },
     { $pull: { favourites: { _id: { $in: [req.params.fid] } } } },
     {},
-    ((err: Error) => {
+    (err: Error) => {
       if (err) {
         return res.status(404).end();
       }
       return res.status(200).end();
-    })
+    }
   );
 });
 

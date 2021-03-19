@@ -6,9 +6,9 @@ const newUser = {
   name: 'test',
   login: 'test',
   surname: 'test',
-  email: 'test',
-  password: 'test',
-  admin: false,
+  email: 'test@test.pl',
+  password: 'password',
+  confirmPassword: 'password',
   notes: [],
   plants: [],
   favourites: []
@@ -16,22 +16,22 @@ const newUser = {
 
 const testUserWithNote = {
   login: 'login',
-  email: 'email',
+  email: 'email@test.pl',
   password: 'password',
+  confirmPassword: 'password',
   name: 'userWithNote',
   surname: 'user',
-  admin: false,
   plants: [],
   notes: []
 };
 
 const testUserWithFavourites = {
   login: 'userTest',
-  email: 'emailTest',
+  email: 'emailTest@test.pl',
   password: 'password',
+  confirmPassword: 'password',
   name: 'userWWithFavorite',
   surname: 'userFav',
-  admin: false,
   plants: [],
   notes: [],
   favourites: []
@@ -60,9 +60,9 @@ describe('/tests for all user', () => {
         name: 'user',
         login: 'user',
         surname: 'user',
-        email: 'user',
-        password: 'user',
-        admin: false
+        email: 'user@test.pl',
+        password: 'password',
+        confirmPassword: 'password'
       })
       .expect(200, done);
   });
@@ -74,8 +74,9 @@ describe('/tests for all user', () => {
         name: 'admin',
         login: 'admin',
         surname: 'admin',
-        email: 'admin',
-        password: 'admin',
+        email: 'admin@test.pl',
+        password: 'password',
+        confirmPassword: 'password',
         admin: true
       })
       .expect(200, done);
@@ -85,8 +86,8 @@ describe('/tests for all user', () => {
     request(app)
       .post('/api/user/login')
       .send({
-        email: 'user',
-        password: 'user'
+        email: 'user@test.pl',
+        password: 'password'
       })
       .expect(200, done);
   });
@@ -113,14 +114,14 @@ describe('/tests for logged user (is Auth)', () => {
     testedUserWithNote.save();
     request(app)
       .post('/api/user/login')
-      .send({ email: 'user', password: 'user' })
+      .send({ email: 'user@test.pl', password: 'password' })
       .end((err, res) => {
         tokenUser = res.body.token;
         done();
       });
 
     beforeEach(async () => {
-      await Favourites.deleteMany({ });
+      await Favourites.deleteMany({});
     });
   });
 
