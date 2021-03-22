@@ -6,9 +6,9 @@ const newUser = {
   name: 'test',
   login: 'test',
   surname: 'test',
-  email: 'test',
-  password: 'test',
-  admin: false,
+  email: 'test@test.pl',
+  password: 'password',
+  confirmPassword: 'password',
   notes: [],
   plants: [],
   calendar: {
@@ -26,7 +26,7 @@ describe('testing calendar API', () => {
 
     await request(app)
       .post('/api/user/login')
-      .send({ email: 'user', password: 'user' })
+      .send({ email: 'user@test.pl', password: 'password' })
       .end((err, res) => {
         token = res.body.token;
         done();

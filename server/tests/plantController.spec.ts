@@ -84,7 +84,7 @@ describe('/POST tests for logged user (isAuth)', () => {
   beforeAll((done) => {
     request(app)
       .post('/api/user/login')
-      .send({ email: 'user', password: 'user' })
+      .send({ email: 'user@test.pl', password: 'password' })
       .end((err, res) => {
         tokenUser = res.body.token;
         done();
@@ -200,7 +200,7 @@ describe('/POST tests for admin (isAdmin)', () => {
   beforeAll((done) => {
     request(app)
       .post('/api/user/login')
-      .send({ email: 'admin', password: 'admin' })
+      .send({ email: 'admin@test.pl', password: 'password' })
       .end((err, res) => {
         tokenAdmin = res.body.token;
         done();
