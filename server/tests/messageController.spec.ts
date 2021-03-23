@@ -20,7 +20,7 @@ describe('POST message endpoint', () => {
   beforeAll((done) => {
     request(app)
       .post('/api/user/login')
-      .send({ email: 'user', password: 'user' })
+      .send({ email: 'user@test.pl', password: 'password' })
       .end((err, res) => {
         tokenUser = res.body.token;
         done();
@@ -84,7 +84,7 @@ describe('DELETE message endpoint', () => {
   beforeAll((done) => {
     request(app)
       .post('/api/user/login')
-      .send({ email: 'admin', password: 'admin' })
+      .send({ email: 'admin@test.pl', password: 'password' })
       .end((err, res) => {
         tokenAdmin = res.body.token;
         done();

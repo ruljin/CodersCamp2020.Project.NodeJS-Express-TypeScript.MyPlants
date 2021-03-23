@@ -73,6 +73,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  confirmPassword: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true
@@ -83,7 +87,8 @@ const UserSchema = new mongoose.Schema({
   },
   admin: {
     type: Boolean,
-    required: true
+    required: true,
+    default: false
   },
   plants: {
     type: [mongoose.Schema.Types.ObjectId],
