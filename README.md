@@ -42,6 +42,7 @@ Our project is an application for plant lovers. Users can share their plants as 
 -   Heroku
 -   Jest
 -   Jira
+-   Lucidchart
 -   MongoDB
 -   Mongoose
 -   Node.js
@@ -50,7 +51,7 @@ Our project is an application for plant lovers. Users can share their plants as 
 
 ## Setup
 #### Demo
-To view a demo click [here](https://coderscamp-plantme.herokuapp.com/).
+To view a demo click [here](https://coderscamp-plantme.herokuapp.com/api-docs/#/).
 
 #### Getting started
 If you want to run the application on the local machine, follow these steps:
@@ -66,5 +67,10 @@ To run the application tests, follow these steps:
 2. Run the tests by running the command: `npm test`
 
 ## Organization of work
+#### Lucidchart
+We have started our work with preparing models using Licidchart. 
+To view our model charts click [here](https://lucid.app/lucidchart/399713b7-daf6-4c9a-aab4-17a950b2574a/edit?shared=true&page=0_0#).
+
 #### Jira
 We used Jira, where we organized all our work. More precisely, we shared responsibilities for each sprint, exchanged comments and approved our tasks.
+To view our board click [here](https://masquerade-inc.atlassian.net/secure/RapidBoard.jspa?rapidView=2).
