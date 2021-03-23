@@ -168,12 +168,6 @@
             "schema": {
               "$ref": "#/components/Error"
             }
-          },
-          "409": {
-            "description": "ERROR",
-            "schema": {
-              "$ref": "#/components/Error"
-            }
           }
         }
       }
@@ -769,6 +763,9 @@
           "uniqueItems": true
         },
         "password": {
+          "type": "string"
+        },
+        "confirmPassword": {
           "type": "string"
         },
         "name": {
