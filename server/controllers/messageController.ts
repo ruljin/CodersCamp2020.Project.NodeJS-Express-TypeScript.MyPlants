@@ -25,7 +25,7 @@ router.post('/', isAuth, async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-  const messages = await Message.find().limit(50);
+  const messages = await Message.find();
   res.json(messages);
 });
 
