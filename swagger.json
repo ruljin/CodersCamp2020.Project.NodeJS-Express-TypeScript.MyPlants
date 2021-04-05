@@ -1047,7 +1047,7 @@
           "$ref":"#/definitions/Comment"
         },
         "toxicity": {
-          "type": "array",
+          "type": "object",
           "$ref":"#/definitions/Toxicity"
         }
       }

@@ -113,7 +113,7 @@ export const PlantSchema = new mongoose.Schema({
     type: [CommentSchema]
   },
   toxicity: {
-    type: [ToxicitySchema],
+    type: ToxicitySchema,
     required: true
   }
 });
