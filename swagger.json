@@ -9,7 +9,7 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "https://coderscamp-plantme.herokuapp.com",
+  "host": "coderscamp-plantme.herokuapp.com",
   "basePath": "/api",
   "tags": [
     {
@@ -43,10 +43,14 @@
     {
       "name": "Calendar",
       "description": "API for calendar in the system"
+    },
+    {
+      "name": "Favourite",
+      "description": "API for favourites in the system"
     }
   ],
   "schemes": [
-    "http"
+    "https"
   ],
   "consumes": [
     "application/json"
@@ -248,6 +252,61 @@
           "Note"
         ],
         "summary": "Update user`s note by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "ERROR"
+          }
+        }
+      }
+    },
+    "/user/{id}/favourites": {
+      "get": {
+        "tags": [
+          "Favourite"
+        ],
+        "summary": "Get user favourites users",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Favourite"
+            }
+          },
+          "404": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Favourite"
+        ],
+        "summary": "Add new user to user`s favourites",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "ERROR",
+            "schema": {
+              "$ref": "#/components/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}/favourites/{fid}": {
+      "delete": {
+        "tags": [
+          "Favourite"
+        ],
+        "summary": "Remove user from user`s favourites",
         "responses": {
           "200": {
             "description": "OK"
@@ -510,8 +569,7 @@
             "description": "OK",
             "schema": {
               "$ref":"#/definitions/Message"
-            },
-            "limit": "50"
+            }
           }
         }
       }
@@ -779,11 +837,11 @@
         },
         "plants": {
           "type": "array",
-          "$ref":"#/definitions/Plant"
+          "$ref": "#/definitions/Plant"
         },
         "notes": {
           "type": "array",
-          "$ref":"#/definitions/Note"
+          "$ref": "#/definitions/Note"
         },
         "calendar": {
           "type": "Object"
@@ -1008,6 +1066,22 @@
         "name": {
           "type": "string",
           "uniqueItems": true
+        }
+      }
+    },
+    "Favourite": {
+      "required": [
+        "_id"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true,
+          "format": "ObjectId"
+        },
+        "user": {
+          "type": "array",
+          "$ref": "#/definitions/User"
         }
       }
     }
