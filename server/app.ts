@@ -9,6 +9,7 @@ import userController from './controllers/userController';
 import messageController from './controllers/messageController';
 import calendarController from './controllers/calendarController';
 import chatController from './controllers/chatController';
+import speciesController from './controllers/speciesController';
 
 dotenv.config();
 const app = express();
@@ -22,5 +23,6 @@ app.use('/api/message', messageController);
 app.use('/api/plant', plantController);
 app.use('/api/calendar', calendarController);
 app.use('/api/chat', chatController);
+app.use('/api/species', speciesController);
 
 export default app;
