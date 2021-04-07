@@ -8,4 +8,4 @@ export const SpeciesSchema = new mongoose.Schema({
   }
 });
 
-export const species = mongoose.model('species', SpeciesSchema);
+export const Species = mongoose.model('species', SpeciesSchema);
