@@ -300,7 +300,7 @@ router.get('/:id/plants/:pid', isAuth, async (req: Request, res: Response) => {
       return res.status(404).end();
     }
     return foundUser.get('plants').forEach((plant) => {
-      if (`${plant._id}` === `${req.params.nid}`) {
+      if (`${plant._id}` === `${req.params.pid}`) {
         res.status(200).json(plant).end();
       }
     });
@@ -318,6 +318,36 @@ router.post('/:id/plants', isAuth, async (req: Request, res: Response) => {
     userObject.save();
     return res.status(200).end();
   });
+});
+
+router.put('/:id/plants/:pid', isAuth, async (req: Request, res: Response) => {
+  await User.findById(req.params.id, (err, foundUser) => {
+    if (err) {
+      return res.status(404).end();
+    }
+    foundUser.plants = foundUser.plants.map((plant) => {
+      if (`${plant._id}` === `${req.params.pid}`) {
+        plant = req.body;
+      }
+      return plant;
+    });
+    foundUser.save();
+    return res.status(200).end();
+  });
+});
+
+router.delete('/:id/plants/:pid', isAuth, async (req: Request, res: Response) => {
+  await User.updateOne(
+    { _id: req.params.id },
+    { $pull: { plants: { _id: { $in: [req.params.pid] } } } },
+    {},
+    (err: Error) => {
+      if (err) {
+        return res.status(404).end();
+      }
+      return res.status(200).end();
+    }
+  );
 });
 
 export default router;

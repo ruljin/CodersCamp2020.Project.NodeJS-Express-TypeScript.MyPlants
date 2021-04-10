@@ -60,17 +60,6 @@ export const FavouriteSchema = new mongoose.Schema({
   }
 });
 
-export const UserToxicitySchema = new mongoose.Schema({
-  human: {
-    type: Boolean,
-    required: true
-  },
-  animal: {
-    type: Boolean,
-    required: true
-  }
-});
-
 export const UserPlantSchema = new mongoose.Schema({
   plant: {
     type: mongoose.Schema.Types.ObjectId,
@@ -79,66 +68,15 @@ export const UserPlantSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    required: true,
-    unique: true
-  },
-  latin_name: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  min_temperature: {
-    type: Number,
     required: true
   },
-  max_temperature: {
-    type: Number,
-    required: true
-  },
-  watering: {
-    type: String,
-    required: true
-  },
-  watering_method: {
-    type: String,
-    required: true
-  },
-  subsoil: {
-    type: String,
-    required: true
-  },
-  conditioners: {
-    type: String,
-    required: true
-  },
-  spraying: {
-    type: String,
-    required: true
-  },
-  sunlight: {
-    type: String,
-    required: true
-  },
-  humidity: {
-    type: String,
-    required: true
-  },
-  application: {
+  description: {
     type: String,
     required: true
   },
   image: {
     type: String,
     default: defaultPlantUrl
-  },
-  species: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'species',
-    required: true
-  },
-  toxicity: {
-    type: UserToxicitySchema,
-    required: true
   }
 });
 
@@ -185,5 +123,4 @@ export const Calendar = mongoose.model('calendar', CalendarSchema);
 export const User = mongoose.model('user', UserSchema);
 export const Note = mongoose.model('note', NoteSchema);
 export const Favourites = mongoose.model('favourites', FavouriteSchema);
-export const UserToxicity = mongoose.model('userToxicity', UserToxicitySchema);
 export const UserPlant = mongoose.model('userPlant', UserPlantSchema);
