@@ -6,7 +6,9 @@ import * as mongoose from 'mongoose';
 import { body, validationResult } from 'express-validator';
 import { Request, Response } from 'express';
 import { isAuth } from '../middleware/check-auth';
-import { User, Note, Favourites } from '../models/user';
+import {
+  User, Note, Favourites, UserPlant
+} from '../models/user';
 
 dotenv.config();
 const { JWT_KEY } = process.env;
@@ -271,6 +273,73 @@ router.delete('/:id/favourites/:fid', isAuth, async (req: Request, res: Response
   await User.updateOne(
     { _id: req.params.id },
     { $pull: { favourites: { _id: { $in: [req.params.fid] } } } },
+    {},
+    (err: Error) => {
+      if (err) {
+        return res.status(404).end();
+      }
+      return res.status(200).end();
+    }
+  );
+});
+
+router.get('/:id/plants', isAuth, async (req: Request, res: Response) => {
+  const userId = req.params.id;
+  await User.findById(userId, (err: Error, user: mongoose.Document) => {
+    if (err) {
+      return res.status(404).json({ error: 'Plant list is empty' }).end();
+    }
+    const userPlants = user.get('plants');
+    return res.status(200).json(userPlants).end();
+  });
+});
+
+router.get('/:id/plants/:pid', isAuth, async (req: Request, res: Response) => {
+  await User.findById(req.params.id, (err: Error, foundUser: mongoose.Document) => {
+    if (err) {
+      return res.status(404).end();
+    }
+    return foundUser.get('plants').forEach((plant) => {
+      if (`${plant._id}` === `${req.params.pid}`) {
+        res.status(200).json(plant).end();
+      }
+    });
+  });
+});
+
+router.post('/:id/plants', isAuth, async (req: Request, res: Response) => {
+  const newPlant = new UserPlant(req.body);
+  const userId = req.params.id;
+  await User.findById(userId, (err: Error, userObject: mongoose.Document) => {
+    if (err) {
+      return res.status(404).json({ error: 'Plant not found!' }).end();
+    }
+    userObject.get('plants').push(newPlant);
+    userObject.save();
+    return res.status(200).end();
+  });
+});
+
+router.put('/:id/plants/:pid', isAuth, async (req: Request, res: Response) => {
+  await User.findById(req.params.id, (err, foundUser) => {
+    if (err) {
+      return res.status(404).end();
+    }
+    foundUser.plants = foundUser.plants.map((plant) => {
+      if (`${plant._id}` === `${req.params.pid}`) {
+        plant = req.body;
+      }
+      return plant;
+    });
+    foundUser.save();
+    return res.status(200).end();
+  });
+});
+
+router.delete('/:id/plants/:pid', isAuth, async (req: Request, res: Response) => {
+  await User.updateOne(
+    { _id: req.params.id },
+    { $pull: { plants: { _id: { $in: [req.params.pid] } } } },
     {},
     (err: Error) => {
       if (err) {

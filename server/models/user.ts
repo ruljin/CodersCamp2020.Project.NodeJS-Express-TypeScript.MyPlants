@@ -1,6 +1,8 @@
 import * as mongoose from 'mongoose';
 
-const NoteSchema = new mongoose.Schema({
+const defaultPlantUrl = 'https://res.cloudinary.com/ded5al291/image/upload/v1614255324/My%20Plants/logo-plant-leaf_bsnbcb.png';
+
+export const NoteSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true
@@ -51,10 +53,30 @@ export const CalendarSchema = new mongoose.Schema({
   }
 });
 
-const FavouriteSchema = new mongoose.Schema({
+export const FavouriteSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user'
+  }
+});
+
+export const UserPlantSchema = new mongoose.Schema({
+  plant: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'plant',
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  image: {
+    type: String,
+    default: defaultPlantUrl
   }
 });
 
@@ -90,10 +112,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
     default: false
   },
-  plants: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'plant'
-  },
+  plants: [UserPlantSchema],
   notes: [NoteSchema],
   calendar: CalendarSchema,
   favourites: [FavouriteSchema]
@@ -104,3 +123,4 @@ export const Calendar = mongoose.model('calendar', CalendarSchema);
 export const User = mongoose.model('user', UserSchema);
 export const Note = mongoose.model('note', NoteSchema);
 export const Favourites = mongoose.model('favourites', FavouriteSchema);
+export const UserPlant = mongoose.model('userPlant', UserPlantSchema);
