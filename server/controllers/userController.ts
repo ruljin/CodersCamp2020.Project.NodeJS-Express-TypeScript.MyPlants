@@ -7,7 +7,7 @@ import { body, validationResult } from 'express-validator';
 import { Request, Response } from 'express';
 import { isAuth } from '../middleware/check-auth';
 import {
-  User, Note, Favourites, UserPlant
+  User, Note, Favourites, UserPlant, Calendar
 } from '../models/user';
 
 dotenv.config();
@@ -54,6 +54,7 @@ router.post(
 
     req.body.password = await bcrypt.hash(req.body.password, 12);
     req.body.confirmPassword = await bcrypt.hash(req.body.confirmPassword, 12);
+    req.body.calendar = new Calendar();
     const newUser = new User(req.body);
     newUser.save();
     return res.sendStatus(200).end();
