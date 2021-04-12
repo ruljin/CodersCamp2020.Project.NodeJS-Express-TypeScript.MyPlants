@@ -92,6 +92,18 @@ router.post('/login', (req: Request, res: Response) => {
     .catch((err: Error) => console.error(err));
 });
 
+router.get('/', isAuth, (req: Request, res: Response) => {
+  User.find({}, (error, users: any[]) => {
+    if (error) console.error(error);
+    for (let i = 0; i < users.length; i += 1) {
+      users[i].password = undefined;
+      users[i].confirmPassword = undefined;
+      if (i === 0) console.log(users[i].password);
+    }
+    return res.status(200).json(users).end();
+  });
+});
+
 router.get('/:id', isAuth, (req: Request, res: Response) => {
   User.findById(req.params.id)
     .then(async (user: mongoose.Document) => {
