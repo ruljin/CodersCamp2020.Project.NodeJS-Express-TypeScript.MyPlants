@@ -82,7 +82,25 @@
             "description": "Email or login exists"
           }
         }
-      } 
+      },
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get add users",
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get all users"
+          }
+        }
+      }
     },
     "/user/login": {
       "post": {
